@@ -7,7 +7,14 @@
         <script src="scripts/lodash.min.js"></script>
         <script type="text/javascript">
         //here goes my script
-
+        $.ajax({
+        type: 'POST',
+        url: '/user/register',
+        dataType: json,
+        success: function(reg){
+            alert(reg);
+        }
+        });
         </script>
     </head>
 <body>
