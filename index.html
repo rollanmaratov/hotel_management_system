@@ -11,6 +11,15 @@
             var email = $("#email").val();
             var password = $("#password").val();
         }
+        $.ajax({
+        type: 'POST',
+        url: '/user/login',
+        dataType: json,
+        success: function(reg){
+            alert(reg);
+        }
+        });
+
         </script>
     </head>
     <body>
