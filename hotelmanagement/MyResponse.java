@@ -1,6 +1,6 @@
 package hotelmanagement;
 
-public class RegResponse {
+public class MyResponse {
     private String message;
 
     public void setMessage(String msg){ this.message = msg; }

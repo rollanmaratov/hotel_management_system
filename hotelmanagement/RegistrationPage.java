@@ -18,11 +18,11 @@ import com.google.gson.Gson;
         Gson gson = new Gson();
         String json;
 
-        RegResponse reg = new RegResponse();
+        MyResponse reg = new MyResponse();
 
         if(!password.equals(reppassword)){
             reg.setMessage("Passwords do not match");
-            json = gson.toJson(reg, RegResponse.class);
+            json = gson.toJson(reg, MyResponse.class);
             return Response.ok(json).build();
         }
 
@@ -30,14 +30,14 @@ import com.google.gson.Gson;
 
         if(service.mailExists(email)){
             reg.setMessage("Mail already exists");
-            json = gson.toJson(reg, RegResponse.class);
+            json = gson.toJson(reg, MyResponse.class);
             return Response.ok(json).build();
         }
 
         service.createAccount(email, firstname, lastname, password);
         reg.setMessage("Welcome! You have successfully registered!");
 
-        json = gson.toJson(reg, RegResponse.class);
+        json = gson.toJson(reg, MyResponse.class);
         return Response.ok(json).build();
     }
 }
