@@ -1,8 +1,5 @@
 package hotelmanagement;
 
-import java.util.List;
-import java.util.concurrent.CopyOnWriteArrayList;
-
 import javax.ws.rs.*;
 import javax.ws.rs.core.Response;
 
