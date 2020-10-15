@@ -50,4 +50,18 @@ public class CustomerService {
             System.exit(0);
         }
     }
+
+    public boolean passMatch(String email, String password){
+        try {
+            Statement stat = connect();
+            ResultSet rs = stat.executeQuery("select password from users where email = " + email);
+            if(rs.getString("password").equals(password)) return true;
+        } catch ( Exception e ) {
+            System.err.println( e.getClass().getName() + ": " + e.getMessage() );
+            System.exit(0);
+        }
+
+        System.out.println("passwords do not match");
+        return false;
+    }
 }

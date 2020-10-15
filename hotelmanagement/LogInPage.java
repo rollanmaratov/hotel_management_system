@@ -19,12 +19,13 @@ public class LogInPage {
 
         CustomerService service = new CustomerService();
 
-        if(!(service.mailExists(email))||!(service.mailExists(password))){
+        if(!(service.mailExists(email)) || !(service.passMatch(email, password))){
             reg.setMessage("Email or password is incorrect");
             json = gson.toJson(reg, RegResponse.class);
             return Response.ok(json).build();
         }
-        else reg.setMessage("You have successfully logged in");
+
+        reg.setMessage("You have successfully logged in");
         json = gson.toJson(reg, RegResponse.class);
         return Response.ok(json).build();
     }
