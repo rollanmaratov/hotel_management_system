@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Login Page</title>
+        <link rel="stylesheet" href="style.css">
+        <script src="scripts/jquery.min.js"></script>
+        <script src="scripts/lodash.min.js"></script>
+        <script type="text/javascript">
+        //here goes my script
+        function sendLoginInfo() {
+            var email = $("#email").val();
+            var password = $("#password").val();
+        }
+        $.ajax({
+        type: 'POST',
+        url: '/user/login',
+        dataType: json,
+        success: function(reg){
+            alert(reg);
+        }
+        });
+
+        </script>
+    </head>
+    <body>
+        <div class="heading">
+            <h1>Our Magnificient Hotel</h1>
+        </div>
+
+        <div class="login">
+            <h4>Login</h4>
+            <form method="POST" action="/user/login">
+                <input type="text" placeholder="Email" name="email" id="email">
+                <input type="text" placeholder="Password" name="password" id="password">
+                <input type="submit" id="login_button" name="login_button" value="Login">
+                <p>New user? Register <a href="register.html">here</a></p>
+            </form>
+        </div>
+
+   
+    </body>
+</html> 

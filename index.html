@@ -1,44 +1,45 @@
  <!DOCTYPE html>
 <html>
     <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Unnamed Hotel</title>
         <link rel="stylesheet" href="style.css">
+        <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@100;300;400;600;700;900&display=swap" rel="stylesheet">
         <script src="scripts/jquery.min.js"></script>
         <script src="scripts/lodash.min.js"></script>
         <script type="text/javascript">
         //here goes my script
-        function sendLoginInfo() {
-            var email = $("#email").val();
-            var password = $("#password").val();
-        }
-        $.ajax({
-        type: 'POST',
-        url: '/user/login',
-        dataType: json,
-        success: function(reg){
-            alert(reg);
-        }
-        });
-
+        
         </script>
     </head>
     <body>
+        <div class="links">
+            <a href="login.html">Log In or Register</a>
+        </div>
         <div class="heading">
-            <h1>Our Magnificient Hotel</h1>
+            <div class="hotel_logo">
+                <span>Hotel <br> Dreamers</span>
+            </div>
+        </div>
+        
+        <div class="services">
+
         </div>
 
-        <div class="login">
-            <h4>you need to log in first</h4>
-            <form method="POST" action="/user/login">
-                <input type="text" placeholder="Email" name="email" id="email">
-                <input type="text" placeholder="Password" name="password" id="password">
-                <input type="submit" id="login_button" name="login_button" value="Login">
-                <p>New user? Register <a href="register.html">here</a></p>
-            </form>
+        <div class="welcome">
+            <div class="welcome_image">
+                <img class="center_fit" src="img/hotel_index_image.jpg" alt="">
+            </div>
         </div>
 
         <div class="about_hotel">
-
+            <span class="about_title"> About Hotel</span>
+            <div class="about_wrapper">
+                <span>
+                    Lorem ipsum dolor sit amet consectetur, adipisicing elit. Illo in iusto, assumenda voluptatum doloribus tempore necessitatibus ea tempora dolore rerum, iste quis, culpa saepe quaerat cumque enim at earum facere!
+                </span>
+            </div>
         </div>
     </body>
 </html> 
