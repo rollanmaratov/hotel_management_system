@@ -5,6 +5,7 @@
         <link rel="stylesheet" href="style.css">
         <script src="scripts/jquery.min.js"></script>
         <script src="scripts/lodash.min.js"></script>
+        <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@100;300;400;600;700;900&display=swap" rel="stylesheet">
         <script type="text/javascript">
         //here goes my script
         $.ajax({
@@ -18,12 +19,23 @@
         </script>
     </head>
 <body>
-    <div class="heading">
-        <h1>Our Magnificient Hotel</h1>
+    <div class="links">
+        <a href="login.html">Log In or Register</a>
+    </div>
+    <div class="heading" >
+        <a href="index.html">
+        <div class="hotel_logo">
+            <span>Hotel <br> Dreamers</span>
+        </div>
+        </a>
+    </div>
+    
+    <div class="services">
+
     </div>
 
-    <div class="Registration">
-        <h4>Register!</h4>
+    <div class="registration">
+        <span class="title">Registration</span>
         <form method="POST" action="user/register"> 
             <input type="text" placeholder="Enter First Name" name="firstname" id="firstname"> <br>
             <input type="text" placeholder="Enter Last Name" name="lastname" id="lastname"> <br>
