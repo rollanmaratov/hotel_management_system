@@ -5,6 +5,7 @@
         <link rel="stylesheet" href="style.css">
         <script src="scripts/jquery.min.js"></script>
         <script src="scripts/lodash.min.js"></script>
+        <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@100;300;400;600;700;900&display=swap" rel="stylesheet">
         <script type="text/javascript">
         //here goes my script
         function sendLoginInfo() {
@@ -23,15 +24,22 @@
         </script>
     </head>
     <body>
+        <div class="links">
+            <a href="login.html">Log In or Register</a>
+        </div>
         <div class="heading">
-            <h1>Our Magnificient Hotel</h1>
+            <a href="index.html">
+                <div class="hotel_logo">
+                    <span>Hotel <br> Dreamers</span>
+                </div>
+                </a>
         </div>
 
         <div class="login">
-            <h4>Login</h4>
-            <form method="POST" action="/user/login">
-                <input type="text" placeholder="Email" name="email" id="email">
-                <input type="text" placeholder="Password" name="password" id="password">
+            <span class="title">Login</span>
+            <form method="POST" action="/user/login" class="loginform">
+                <input type="text" placeholder="Email" name="email" id="email"> <br>
+                <input type="password" placeholder="Password" name="password" id="password"> <br>
                 <input type="submit" id="login_button" name="login_button" value="Login">
                 <p>New user? Register <a href="register.html">here</a></p>
             </form>
