@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Registration</title>
+        <link rel="stylesheet" href="style.css">
+        <script src="scripts/jquery.min.js"></script>
+        <script src="scripts/lodash.min.js"></script>
+        <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@100;300;400;600;700;900&display=swap" rel="stylesheet">
+        <script type="text/javascript">
+        //here goes my script
+        $.ajax({
+        type: 'POST',
+        url: '/user/register',
+        dataType: json,
+        success: function(reg){
+            alert(reg);
+        }
+        });
+        </script>
+    </head>
+<body>
+    <div class="links">
+        <a href="login.html">Log In or Register</a>
+    </div>
+    <div class="heading" >
+        <a href="index.html">
+        <div class="hotel_logo">
+            <span>Hotel <br> Dreamers</span>
+        </div>
+        </a>
+    </div>
+    
+    <div class="services">
+
+    </div>
+
+    <div class="registration">
+        <span class="title">Registration</span>
+        <form method="POST" action="user/register"> 
+            <input type="text" placeholder="Enter First Name" name="firstname" id="firstname"> <br>
+            <input type="text" placeholder="Enter Last Name" name="lastname" id="lastname"> <br>
+            <input type="text" placeholder="Enter Email" name="email" id="email"> <br>
+            <input type="password" placeholder="Enter Password" name="password" id="password"> <br>
+            <input type="password" placeholder="Repeat Password" name="reppassword" id="reppassword"> <br>
+            <input type="submit" id="register_button" value="Register">
+        </form>
+    </div>
+</body>
+</html>
