@@ -1,11 +1,15 @@
 package hotelmanagement;
 
+import javax.servlet.Servlet;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Response;
+import javax.servlet.http.*;
 
 import com.google.gson.Gson;
+
 @Path("/user")
-public class LogInPage {
+public class LogInPage extends HttpServlet {
+
     @POST
     @Path("/login")
     public Response registerUser(@FormParam("email") String email,

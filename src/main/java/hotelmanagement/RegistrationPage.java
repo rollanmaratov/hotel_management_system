@@ -2,11 +2,12 @@ package hotelmanagement;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.Response;
+import javax.servlet.http.*;
 
 import com.google.gson.Gson;
 
 @Path("/user")
-    public class RegistrationPage {
+    public class RegistrationPage extends HttpServlet{
 
     @POST
     @Path("/register")
