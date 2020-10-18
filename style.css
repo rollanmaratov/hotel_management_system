@@ -83,11 +83,15 @@
     text-align: center;
  }
 
- .about_wrapper {
+ .text_wrapper {
      margin: 10px 50px 10px 50px;
     display: flex;
     background-color: #fff;
     box-shadow: 3px 2px 5px rgba(0, 0, 0, 0.5);
+ }
+
+ .text_wrapper #oops {
+     text-align: center;
  }
 
  /*
