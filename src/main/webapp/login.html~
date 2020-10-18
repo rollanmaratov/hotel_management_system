@@ -15,7 +15,7 @@
             var password = $("#password").val();
         }
         $.ajax({
-        type: 'GET',
+        type: 'POST',
         url: '/user/login',
         dataType: json,
         success: function(reg){
@@ -39,7 +39,7 @@
 
         <div class="login">
             <span class="title">Login</span>
-            <form method="GET" action="/user/login" class="loginform">
+            <form method="POST" action="/user/login" class="loginform">
                 <input type="text" placeholder="Email" name="email" id="email"> <br>
                 <input type="password" placeholder="Password" name="password" id="password"> <br>
                 <input type="submit" id="login_button" name="login_button" value="Login">

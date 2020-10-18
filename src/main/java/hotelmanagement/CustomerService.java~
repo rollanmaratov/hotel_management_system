@@ -7,11 +7,8 @@ public class CustomerService {
     protected Statement connect(){
         Connection c = null;
         try {
-            Context initCtx = new InitialContext ();
-            Context envCtx = (Context) initCtx.lookup("java:comp/env");
-            DataSource ds = (DataSource) envCtx.lookup("jdbc/DistDB");
-            conn = ds.getConnection();
-
+            Class.forName("org.sqlite.JDBC");
+            c = DriverManager.getConnection("jdbc:sqlite:hotel.db");
             Statement stat = c.createStatement();
 
             return stat;

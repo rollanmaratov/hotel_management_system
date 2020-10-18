@@ -10,7 +10,7 @@ import com.google.gson.Gson;
 @Path("/user")
 public class LogInPage extends HttpServlet {
 
-    @GET
+    @POST
     @Path("/login")
     public Response registerUser(@FormParam("email") String email,
                                  @FormParam("password") String password){
