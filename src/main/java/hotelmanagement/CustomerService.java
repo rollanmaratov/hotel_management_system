@@ -1,5 +1,8 @@
 package hotelmanagement;
 
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.sql.DataSource;
 import java.sql.*;
 
 public class CustomerService {
@@ -7,10 +10,10 @@ public class CustomerService {
     protected Statement connect(){
         Connection c = null;
         try {
-            Context initCtx = new InitialContext ();
+            Context initCtx = new InitialContext();
             Context envCtx = (Context) initCtx.lookup("java:comp/env");
             DataSource ds = (DataSource) envCtx.lookup("jdbc/DistDB");
-            conn = ds.getConnection();
+            Connection conn = ds.getConnection();
 
             Statement stat = c.createStatement();
 
