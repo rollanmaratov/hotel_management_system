@@ -23,7 +23,26 @@
      text-decoration: none;
  }
 
- .heading a {
+ .heading {
+     display: flex;
+     flex-direction: row;
+     justify-content: space-between;
+ }
+
+ .services {
+     margin-top: 30px;
+ }
+
+ .services a {
+     color: #132743;
+     text-decoration: none;
+     text-transform: uppercase;
+     margin-left: 10px;
+     margin-right: 10px;
+ }
+
+ .hotel_logo a {
+     color: white;
      text-decoration: none;
  }
 
@@ -64,11 +83,15 @@
     text-align: center;
  }
 
- .about_wrapper {
+ .text_wrapper {
      margin: 10px 50px 10px 50px;
     display: flex;
     background-color: #fff;
     box-shadow: 3px 2px 5px rgba(0, 0, 0, 0.5);
+ }
+
+ .text_wrapper #oops {
+     text-align: center;
  }
 
  /*
