@@ -13,6 +13,7 @@ public class LogInPage extends HttpServlet {
         super();
     }
 
+    @Override
     public void doPost(HttpServletRequest request, HttpServletResponse response)
                         throws ServletException, IOException {
 
