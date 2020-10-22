@@ -11,24 +11,14 @@
         <script type="text/javascript">
         //here goes my script
 
-        function getInfo() {
-            $.ajax({
-                url : 'user/login',
-                dataType : 'json',
-                success : function(response) {
-                    console.log(response);
-                }
-            });
-        }
-
         function sendLoginInfo() {
             var email = $("#email").val();
             var password = $("#password").val();
             if (email == "" || password=="") {
                 alert("Fields empty")
             }
-            $.post("user/login", { email: email, password: password}, function() {
-                getInfo();
+            $.post('login', { email: email, password: password}, function(response) {
+                $('#ajax-response').text(responseText);
             });
         }
 
@@ -63,10 +53,11 @@
 
         <div class="login">
             <span class="title">Login</span>
-            <form method="POST" action="/user/login" class="loginform">
+            <form method="POST" class="loginform">
                 <input type="text" placeholder="Email" name="email" id="email"> <br>
                 <input type="password" placeholder="Password" name="password" id="password"> <br>
                 <input type="submit" id="login_button" name="login_button" value="Login">
+                <div id="ajax_response"></div>
                 <p>New user? Register <a href="register.html">here</a></p>
             </form>
         </div>
