@@ -19,10 +19,17 @@ public class RegistrationPage extends HttpServlet{
 
         response.setContentType("text/plain");
 
-        if(!password.equals(reppassword)) response.getWriter().print("Passwords do not match");
+        if(!password.equals(reppassword)){
+            response.getWriter().print("Passwords do not match");
+            return;
+        }
 
         CustomerService service = new CustomerService();
-        if(service.mailExists(email)) response.getWriter().print("Mail already exists");
+
+        if(service.mailExists(email)){
+            response.getWriter().print("Mail already exists");
+            return;
+        }
 
         service.createAccount(email, firstname, lastname, password);
         response.getWriter().print("Success!");

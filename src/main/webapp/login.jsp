@@ -60,7 +60,7 @@
                 <input type="password" placeholder="Password" name="password" id="password"> <br>
                 <input type="button" id="login_button" name="login_button" value="Login">
                 <div id="ajax_response"></div>
-                <p>New user? Register <a href="register.html">here</a></p>
+                <p>New user? Register <a href="register.jsp">here</a></p>
             </form>
         </div>
 
