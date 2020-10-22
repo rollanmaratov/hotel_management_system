@@ -36,7 +36,7 @@ public class CustomerService {
         try {
             Connection conn = connect();
             PreparedStatement stat = conn.prepareStatement(
-                    "insert into users (email, fistname, lastname, password) values(?, ?, ?, ?)");
+                    "insert into users (email, firstname, lastname, password) values(?, ?, ?, ?)");
 
             stat.setString(1, email);
             stat.setString(2, firstname);
