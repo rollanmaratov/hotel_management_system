@@ -8,6 +8,11 @@ import java.io.IOException;
 
 @WebServlet("/login")
 public class LogInPage extends HttpServlet {
+
+    public LogInPage(){
+        super();
+    }
+
     public void doPost(HttpServletRequest request, HttpServletResponse response)
                         throws ServletException, IOException {
 
@@ -18,9 +23,9 @@ public class LogInPage extends HttpServlet {
         response.setContentType("text/plain");
 
         if(!(service.mailExists(email)) || !(service.passMatch(email, password)))
-            response.getWriter().write("Password or email is incorrect");
+            response.getWriter().print("Password or email is incorrect");
         else
-            response.getWriter().write("Success!");
+            response.getWriter().print("Success!");
     }
 
 }
