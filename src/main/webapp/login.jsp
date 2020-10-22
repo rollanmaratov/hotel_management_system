@@ -16,10 +16,12 @@
             var email = $("#email").val();
             var password = $("#password").val();
             if (email === "" || password === "") {
-                alert("Fields empty")
+                alert("Fields empty");
             }
+
             $.post('login', {email: email, password: password}, function(response) {
                 $('#ajax_response').text(response);
+                alert(response);
             });
         }
 
@@ -57,7 +59,7 @@
             <form method="POST" class="loginform">
                 <input type="text" placeholder="Email" name="email" id="email"> <br>
                 <input type="password" placeholder="Password" name="password" id="password"> <br>
-                <input type="submit" id="login_button" name="login_button" value="Login">
+                <input type="button" id="login_button" name="login_button" value="Login">
                 <div id="ajax_response"></div>
                 <p>New user? Register <a href="register.html">here</a></p>
             </form>

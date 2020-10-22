@@ -27,6 +27,8 @@ public class LogInPage extends HttpServlet {
             response.getWriter().print("Password or email is incorrect");
         else
             response.getWriter().print("Success!");
+
+        response.getWriter().close();
     }
 
 }
