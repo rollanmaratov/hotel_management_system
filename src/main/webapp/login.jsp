@@ -1,3 +1,4 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
     <head>
@@ -5,7 +6,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Login Page</title>
         <link rel="stylesheet" href="style.css">
-        <script   src="http://code.jquery.com/jquery-3.5.1.js"   integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc="   crossorigin="anonymous"></script>
+        <script src="http://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc="   crossorigin="anonymous"></script>
         <script src="scripts/lodash.min.js"></script>
         <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@100;300;400;600;700;900&display=swap" rel="stylesheet">
         <script type="text/javascript">
@@ -14,11 +15,11 @@
         function sendLoginInfo() {
             var email = $("#email").val();
             var password = $("#password").val();
-            if (email == "" || password=="") {
+            if (email === "" || password === "") {
                 alert("Fields empty")
             }
             $.post('login', { email: email, password: password}, function(response) {
-                $('#ajax-response').text(responseText);
+                $('#ajax_response').text(response);
             });
         }
 
@@ -32,7 +33,7 @@
     </head>
     <body>
         <div class="links">
-            <a href="login.html">Log In or Register</a>
+            <a href="login.jsp">Log In or Register</a>
         </div>
         <div class="heading">
             
