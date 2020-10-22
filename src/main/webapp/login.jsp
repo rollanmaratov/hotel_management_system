@@ -21,7 +21,6 @@
 
             $.post('login', {email: email, password: password}, function(response) {
                 $('#ajax_response').text(response);
-                alert(response);
             });
         }
 

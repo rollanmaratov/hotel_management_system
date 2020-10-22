@@ -6,6 +6,7 @@ public class CustomerService {
 
     private static Connection connect(){
         try {
+            Class.forName("com.mysql.jdbc.Driver");
             return DriverManager.getConnection("jdbc:mysql://localhost:3306/hotel","root","prinny");
         } catch ( Exception e ) {
             System.err.println( e.getClass().getName() + ": " + e.getMessage() );
@@ -57,8 +58,13 @@ public class CustomerService {
             Connection conn = connect();
             Statement stat = conn.createStatement();
 
-            ResultSet rs = stat.executeQuery("select password from users where email = " + email);
-            if(rs.getString("password").equals(password)) return true;
+            String exec = "select password from users where email='"+email+"'";
+
+            try (ResultSet rs = stat.executeQuery(exec)) {
+                rs.next();
+                if (rs.getString("password").equals(password)) return true;
+                return false;
+            }
 
         } catch ( Exception e ) {
             System.err.println( e.getClass().getName() + ": " + e.getMessage() );
