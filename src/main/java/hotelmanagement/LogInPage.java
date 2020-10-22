@@ -1,35 +1,26 @@
 package hotelmanagement;
 
-import javax.servlet.Servlet;
-import javax.ws.rs.*;
-import javax.ws.rs.core.Response;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.*;
 import javax.servlet.http.*;
 
-import com.google.gson.Gson;
+import java.io.IOException;
 
-@Path("/user")
+@WebServlet("/login")
 public class LogInPage extends HttpServlet {
+    public void doPost(HttpServletRequest request, HttpServletResponse response)
+                        throws ServletException, IOException {
 
-    @GET
-    @Path("/login")
-    public Response registerUser(@FormParam("email") String email,
-                                 @FormParam("password") String password){
-        Gson gson = new Gson();
-        String json;
-
-        MyResponse reg = new MyResponse();
+        String email = request.getParameter("email").trim();
+        String password = request.getParameter("password").trim();
 
         CustomerService service = new CustomerService();
+        response.setContentType("text/plain");
 
-        if(!(service.mailExists(email)) || !(service.passMatch(email, password))){
-            reg.setMessage("Email or password is incorrect");
-            json = gson.toJson(reg, MyResponse.class);
-            return Response.ok(json).build();
-        }
-
-        reg.setMessage("You have successfully logged in");
-        json = gson.toJson(reg, MyResponse.class);
-        return Response.ok(json).build();
+        if(!(service.mailExists(email)) || !(service.passMatch(email, password)))
+            response.getWriter().write("Password or email is incorrect");
+        else
+            response.getWriter().write("Success!");
     }
 
 }

@@ -1,20 +1,12 @@
 package hotelmanagement;
 
-import javax.naming.*;
 import java.sql.*;
-import javax.sql.*;
 
 public class CustomerService {
 
     private static Connection connect(){
-        Connection c = null;
         try {
-            Context initCtx = new InitialContext();
-            Context envCtx = (Context) initCtx.lookup("java:comp/env");
-            DataSource ds = (DataSource) envCtx.lookup("jdbc/DistDB");
-            c = ds.getConnection();
-
-            return c;
+            return DriverManager.getConnection("jdbc:mysql://localhost:3306/hotel","root","prinny");
         } catch ( Exception e ) {
             System.err.println( e.getClass().getName() + ": " + e.getMessage() );
             System.exit(0);
@@ -43,11 +35,15 @@ public class CustomerService {
     public void createAccount(String email, String firstname, String lastname, String password){
         try {
             Connection conn = connect();
-            Statement stat = conn.createStatement();
+            PreparedStatement stat = conn.prepareStatement(
+                    "insert into users (email, fistname, lastname, password) values(?, ?, ?, ?)");
 
-            stat.executeUpdate("insert into users (email, fistname, lastname, password)"+
-                                "values(" + email + "," + firstname + "," + lastname + "," + password + ");"
-            );
+            stat.setString(1, email);
+            stat.setString(2, firstname);
+            stat.setString(3, lastname);
+            stat.setString(4, password);
+
+            stat.executeUpdate();
 
             System.out.println("Account created");
         } catch ( Exception e ) {
@@ -60,8 +56,10 @@ public class CustomerService {
         try {
             Connection conn = connect();
             Statement stat = conn.createStatement();
+
             ResultSet rs = stat.executeQuery("select password from users where email = " + email);
             if(rs.getString("password").equals(password)) return true;
+
         } catch ( Exception e ) {
             System.err.println( e.getClass().getName() + ": " + e.getMessage() );
             System.exit(0);

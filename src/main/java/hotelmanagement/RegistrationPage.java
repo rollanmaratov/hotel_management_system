@@ -1,44 +1,30 @@
 package hotelmanagement;
 
-import javax.ws.rs.*;
-import javax.ws.rs.core.Response;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
 
-import com.google.gson.Gson;
+import java.io.IOException;
 
-@Path("/user")
-    public class RegistrationPage extends HttpServlet{
+@WebServlet("/register")
+public class RegistrationPage extends HttpServlet{
+    public void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
 
-    @POST
-    @Path("/register")
-    public Response registerUser(@FormParam("firstname") String firstname,
-                                 @FormParam("lastname") String lastname,
-                                 @FormParam("email") String email,
-                                 @FormParam("password") String password,
-                                 @FormParam("reppassword") String reppassword){
-        Gson gson = new Gson();
-        String json;
+        String email = request.getParameter("email").trim();
+        String password = request.getParameter("password").trim();
+        String reppassword = request.getParameter("reppassword").trim();
+        String firstname = request.getParameter("firstname").trim();
+        String lastname = request.getParameter("lastname").trim();
 
-        MyResponse reg = new MyResponse();
+        response.setContentType("text/plain");
 
-        if(!password.equals(reppassword)){
-            reg.setMessage("Passwords do not match");
-            json = gson.toJson(reg, MyResponse.class);
-            return Response.ok(json).build();
-        }
+        if(!password.equals(reppassword)) response.getWriter().write("Passwords do not match");
 
         CustomerService service = new CustomerService();
-
-        if(service.mailExists(email)){
-            reg.setMessage("Mail already exists");
-            json = gson.toJson(reg, MyResponse.class);
-            return Response.ok(json).build();
-        }
+        if(service.mailExists(email)) response.getWriter().write("Mail already exists");
 
         service.createAccount(email, firstname, lastname, password);
-        reg.setMessage("Welcome! You have successfully registered!");
-
-        json = gson.toJson(reg, MyResponse.class);
-        return Response.ok(json).build();
+        response.getWriter().write("Success!");
     }
 }
