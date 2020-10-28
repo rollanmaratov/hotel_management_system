@@ -7,7 +7,7 @@ import javax.servlet.http.*;
 import java.io.IOException;
 
 @WebServlet("/register")
-public class RegistrationPage extends HttpServlet{
+public class RegistrationServlet extends HttpServlet{
     public void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 

@@ -53,25 +53,56 @@ public class CustomerService {
         }
     }
 
-    public boolean passMatch(String email, String password){
+//    public boolean passMatch(String email, String password){
+//        try {
+//            Connection conn = connect();
+//            Statement stat = conn.createStatement();
+//
+//            String exec = "select password from users where email='"+email+"'";
+//
+//            try (ResultSet rs = stat.executeQuery(exec)) {
+//                rs.next();
+//                if (rs.getString("password").equals(password)) return true;
+//                return false;
+//            }
+//
+//        } catch ( Exception e ) {
+//            System.err.println( e.getClass().getName() + ": " + e.getMessage() );
+//            System.exit(0);
+//        }
+//
+//        System.out.println("passwords do not match");
+//        return false;
+//    }
+
+    public User checkLogin(String email, String password) throws SQLException{
         try {
             Connection conn = connect();
-            Statement stat = conn.createStatement();
+            String sql = "SELECT * FROM users WHERE email = ? and password = ?";
+            PreparedStatement stat = conn.prepareStatement(sql);
 
-            String exec = "select password from users where email='"+email+"'";
+            stat.setString(1, email);
+            stat.setString(2, password);
 
-            try (ResultSet rs = stat.executeQuery(exec)) {
-                rs.next();
-                if (rs.getString("password").equals(password)) return true;
-                return false;
+            ResultSet res = stat.executeQuery();
+
+            User user = null;
+            if(res.next()){
+                user = new User();
+                user.setFirstname(res.getString("firstname"));
+                user.setLastname(res.getString("lastname"));
+                user.setEmail(res.getString("email"));
             }
+
+            conn.close();
+
+            return user;
 
         } catch ( Exception e ) {
             System.err.println( e.getClass().getName() + ": " + e.getMessage() );
             System.exit(0);
         }
 
-        System.out.println("passwords do not match");
-        return false;
+        return null;
     }
 }
