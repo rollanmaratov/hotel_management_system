@@ -37,7 +37,7 @@
     </head>
 <body>
     <div class="links">
-        <script src="scripts/loginlogout.js"></script>
+
     </div>
     <div class="heading">
         
