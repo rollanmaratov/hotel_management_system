@@ -1,4 +1,5 @@
- <!DOCTYPE html>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<!DOCTYPE html>
 <html>
     <head>
         <meta charset="UTF-8">
@@ -6,27 +7,36 @@
         <title>Hotel Dreamers</title>
         <link rel="stylesheet" href="style.css">
         <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@100;300;400;600;700;900&display=swap" rel="stylesheet">
-        <script src="scripts/jquery.min.js"></script>
+        <script src="http://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
         <script src="scripts/lodash.min.js"></script>
         <script type="text/javascript">
-        //here goes my script
-        
+
         </script>
     </head>
     <body>
-        <div class="links">
-            <a href="login.jsp">Log In or Register</a>
+        <div class="links" id="link">
+            <script>
+                let session = '<%= session.getAttribute("user") != null %>';
+                console.log(session);
+                if (session === "true") {
+                    document.write('<span> Welcome, ${user.firstname} ${user.lastname} ');
+                    document.write('<a href="logout.jsp"><b>Logout</b></a> </span>')
+                } else {
+                    document.write('<a href="login.jsp"><b>Login or Register</b></a>');
+                }
+            </script>
+
         </div>
         <div class="heading">
             
             <div class="hotel_logo">
-                <a href="index.html">
+                <a href="index.jsp">
                 <span>Hotel <br> Dreamers</span>
                 </a>
             </div>
             
             <div class="services">
-                <a href="index.html"> Homepage </a>
+                <a href="index.jsp"> Homepage </a>
                 <a href="draft.html">Create a Booking</a>
                 <a href="draft.html">Manage my Booking</a>
                 <a href="draft.html">Information</a>
