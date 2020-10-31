@@ -19,8 +19,10 @@
                 let session = '<%= session.getAttribute("user") != null %>';
                 console.log(session);
                 if (session === "true") {
-                    document.write('<span> Welcome, ${user.firstname} ${user.lastname} ');
-                    document.write('<a href="logout.jsp"><b>Logout</b></a> </span>')
+                    let name = '${user.firstname} ${user.lastname}';
+                    console.log(name);
+                    document.write('<span> Welcome, ' + name + '</span>');
+                    document.write(' <a href="logout.jsp"><b>Logout</b></a> </span>')
                 } else {
                     document.write('<a href="login.jsp"><b>Login or Register</b></a>');
                 }
@@ -28,7 +30,7 @@
 
         </div>
         <div class="heading">
-            
+            <div id="hey"></div>
             <div class="hotel_logo">
                 <a href="index.jsp">
                 <span>Hotel <br> Dreamers</span>
