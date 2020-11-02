@@ -1,3 +1,4 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -10,30 +11,44 @@
         <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@100;300;400;600;700;900&display=swap" rel="stylesheet">
         <script type="text/javascript">
         //here goes my script
-        $.ajax({
-        type: 'POST',
-        url: '/user/register',
-        dataType: json,
-        success: function(reg){
-            alert(reg);
+
+        function sendRegisterInfo() {
+            var firstname = $("#firstname").val();
+            var lastname = $("#lastname").val();
+            var email = $("#email").val();
+            var password = $("#password").val();
+            var reppassword = $("#reppassword").val();
+            if (email === "" || password === "" || firstname === "" || lastname === "" || reppassword === "" ) {
+                alert("Enter all the fields");
+            }
+
+            $.post('register', {firstname: firstname, lastname: firstname, email: email, password: password, reppassword: reppassword}, function(response) {
+                $('.ajax_response').text(response);
+                alert(response);
+            });
         }
+
+        $(document).ready(function () {
+            $("#register_button").on('click', function()  {
+                sendRegisterInfo();
+            });
         });
         </script>
     </head>
 <body>
     <div class="links">
-        <a href="login.html">Log In or Register</a>
+        <a href="login.jsp">Log In or Register</a>
     </div>
     <div class="heading">
         
         <div class="hotel_logo">
-            <a href="index.html">
+            <a href="index.jsp">
             <span>Hotel <br> Dreamers</span>
             </a>
         </div>
         
         <div class="services">
-            <a href="index.html"> Homepage </a>
+            <a href="index.jsp"> Homepage </a>
             <a href="draft.html">Create a Booking</a>
             <a href="draft.html">Manage my Booking</a>
             <a href="draft.html">Information</a>
@@ -43,14 +58,15 @@
 
     <div class="registration">
         <span class="title">Registration</span>
-        <form method="POST" action="user/register"> 
+        <form method="POST"> 
             <input type="text" placeholder="Enter First Name" name="firstname" id="firstname"> <br>
             <input type="text" placeholder="Enter Last Name" name="lastname" id="lastname"> <br>
             <input type="text" placeholder="Enter Email" name="email" id="email"> <br>
             <input type="password" placeholder="Enter Password" name="password" id="password"> <br>
             <input type="password" placeholder="Repeat Password" name="reppassword" id="reppassword"> <br>
-            <input type="submit" id="register_button" value="Register">
+            <input type="button" id="register_button" value="Register">
         </form>
+        <div class="ajax_response"></div>
     </div>
 </body>
 </html>
