@@ -21,7 +21,7 @@
                 if (session === "true") {
                     let name = '${user.firstname} ${user.lastname}';
                     console.log(name);
-                    document.write('<span> Welcome, ' + name + '</span>');
+                    document.write('<span class="profile_name"> Welcome, <a href="profilePage.jsp">' + name + '</a></span>');
                     document.write(' <a href="logout.jsp"><b>Logout</b></a> </span>')
                 } else {
                     document.write('<a href="login.jsp"><b>Login or Register</b></a>');

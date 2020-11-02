@@ -26,7 +26,9 @@
      text-decoration: none;
  }
 
-
+.links a:hover {
+    text-decoration: underline;
+}
 
  .heading {
      display: flex;
@@ -119,5 +121,17 @@ Register Style
  */
 
  .registration {
+     text-align: center;
+ }
+
+ /*
+Profile page style
+ */
+
+ .info_section {
+     text-align: center;
+ }
+
+ .title_section {
      text-align: center;
  }
