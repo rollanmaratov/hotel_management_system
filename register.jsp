@@ -18,11 +18,13 @@
             var email = $("#email").val();
             var password = $("#password").val();
             var reppassword = $("#reppassword").val();
-            if (email === "" || password === "" || firstname === "" || lastname === "" || reppassword === "" ) {
+            var origin = $("#origin").val();
+            var age = $("#age").val();
+            if (email === "" || password === "" || firstname === "" || lastname === "" || reppassword === "" || origin === ""|| age === "") {
                 alert("Enter all the fields");
             }
 
-            $.post('register', {firstname: firstname, lastname: firstname, email: email, password: password, reppassword: reppassword}, function(response) {
+            $.post('register', {firstname: firstname, lastname: firstname, email: email, password: password, reppassword: reppassword, origin: origin, age: age}, function(response) {
                 $('.ajax_response').text(response);
                 alert(response);
             });
@@ -64,6 +66,8 @@
             <input type="text" placeholder="Enter Email" name="email" id="email"> <br>
             <input type="password" placeholder="Enter Password" name="password" id="password"> <br>
             <input type="password" placeholder="Repeat Password" name="reppassword" id="reppassword"> <br>
+            <input type="text" placeholder="Enter your country of origin" name="origin" id="origin"> <br>
+            <input type="number" placeholder="Enter your age" name="age" id="age"> <br>
             <input type="button" id="register_button" value="Register">
         </form>
         <div class="ajax_response"></div>
