@@ -1,4 +1,5 @@
- <!DOCTYPE html>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<!DOCTYPE html>
 <html>
     <head>
         <meta charset="UTF-8">
@@ -20,13 +21,13 @@
         <div class="heading">
             
             <div class="hotel_logo">
-                <a href="index.html">
+                <a href="index.jsp">
                 <span>Hotel <br> Dreamers</span>
                 </a>
             </div>
             
             <div class="services">
-                <a href="index.html"> Homepage </a>
+                <a href="index.jsp"> Homepage </a>
                 <a href="draft.html">Create a Booking</a>
                 <a href="draft.html">Manage my Booking</a>
                 <a href="draft.html">Information</a>
