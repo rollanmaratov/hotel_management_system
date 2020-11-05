@@ -12,32 +12,19 @@
         <script type="text/javascript">
         //here goes my script
 
-        function sendRegisterInfo() {
-            var firstname = $("#firstname").val();
-            var lastname = $("#lastname").val();
-            var email = $("#email").val();
-            var password = $("#password").val();
-            var reppassword = $("#reppassword").val();
-            if (email === "" || password === "" || firstname === "" || lastname === "" || reppassword === "" ) {
-                alert("Enter all the fields");
-            }
-
-            $.post('register', {firstname: firstname, lastname: firstname, email: email, password: password, reppassword: reppassword}, function(response) {
-                $('.ajax_response').text(response);
-                alert(response);
-            });
-        }
 
         $(document).ready(function () {
             $("#register_button").on('click', function()  {
-                sendRegisterInfo();
+                setTimeout(function() {
+                    $('#ajax_response').text('You successfully created a profile! <br> You will be redirected to login page in 5 seconds')
+                }, 5000)
             });
         });
         </script>
     </head>
 <body>
     <div class="links">
-
+        <a href="login.jsp">Log In</a>
     </div>
     <div class="heading">
         
@@ -56,14 +43,41 @@
         </div>
     </div>
 
-    <div class="registration">
+    <div class="title_section">
         <span class="title">Registration</span>
-        <form method="POST"> 
-            <input type="text" placeholder="Enter First Name" name="firstname" id="firstname"> <br>
-            <input type="text" placeholder="Enter Last Name" name="lastname" id="lastname"> <br>
-            <input type="text" placeholder="Enter Email" name="email" id="email"> <br>
-            <input type="password" placeholder="Enter Password" name="password" id="password"> <br>
-            <input type="password" placeholder="Repeat Password" name="reppassword" id="reppassword"> <br>
+    </div>
+
+    <div class="registration">
+        <form method="POST" action="register" id="regForm">
+            <input type="text" placeholder="First Name" name="firstname" id="firstname" required> <!-- on same line -->
+            <input type="text" placeholder="Last Name" name="lastname" id="lastname" required> <br>
+            <input type="text" placeholder="Email" name="email" id="email" required> <br>
+            <input type="password" placeholder="Password" name="password" id="password" required> <br>
+            <input type="password" placeholder="Repeat Password" name="reppassword" id="reppassword" required> <br>
+
+            <label for="idType">Choose your Identification Document:</label> <br />
+            <select name="idType" id="idType" required>
+                <option value="passport">Passport</option>
+                <option value="drivers license">Driver's License</option>
+                <option value="state id">State ID</option>
+            </select>
+            <br>
+            <input type="text" placeholder="Document Number" name="idNum" id="idNum" required> <br>
+            <input type="text" placeholder="Address line 1 (country, city, place)" id="address1" name="address1" required>
+            <br>
+            <input type="text" placeholder="Address line 2 (any additional info)" id="address2" name="address2" > <br>
+            <input type="text" name="mphone" id="mphone" placeholder="Mobile Phone Number" pattern="+[0-9]{11}" required> <br>
+            <input type="text" name="hphone" id="hphone" placeholder="Home Phone Number" pattern="+[0-9]{11}"> <br>
+            <input type="date" name="dateOfBirth" id="dateOfBirth" placeholder="yyyy-mm-dd"> <br>
+            <!-- sex -->
+
+            <input type="radio" id="male" name="sex" value="male">
+            <label for="male">Male</label>
+            <input type="radio" id="female" name="sex" value="female">
+            <label for="female">Female</label>
+            <input type="radio" id="nonbinary" name="sex" value="other">
+            <label for="nonbinary">Other</label> <br>
+
             <input type="button" id="register_button" value="Register">
         </form>
         <div class="ajax_response"></div>

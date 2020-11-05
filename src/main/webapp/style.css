@@ -109,13 +109,14 @@ Login style
      text-align: center;
  }
 
- .loginform {
+ .loginForm {
      text-align: center;
  }
 
- #validation_error {
-     color: darkred;
- }
+.required label:after {
+    content: "*";
+    color: darkred;
+}
   /*
 Register Style
  */

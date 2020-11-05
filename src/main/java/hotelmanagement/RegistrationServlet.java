@@ -16,7 +16,14 @@ public class RegistrationServlet extends HttpServlet{
         String reppassword = request.getParameter("reppassword").trim();
         String firstname = request.getParameter("firstname").trim();
         String lastname = request.getParameter("lastname").trim();
-
+        String idType = request.getParameter("idType").trim();
+        String idNumber = request.getParameter("idNumber").trim();
+        String address1 = request.getParameter("address1").trim();
+        String address2 =  request.getParameter("address2").trim();
+        String mphone =  request.getParameter("mphone").trim();
+        String hphone =  request.getParameter("hphone").trim();
+        String dateOfBirth =  request.getParameter("dateOfBirth").trim();
+        String sex =  request.getParameter("sex").trim();
         response.setContentType("text/plain");
 
         if(!password.equals(reppassword)){

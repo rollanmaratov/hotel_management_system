@@ -15,7 +15,7 @@
     </head>
     <body>
         <div class="links" id="link">
-            <script>
+            <script> //try to implement this with knockout js
                 let session = '<%= session.getAttribute("user") != null %>';
                 console.log(session);
                 if (session === "true") {
