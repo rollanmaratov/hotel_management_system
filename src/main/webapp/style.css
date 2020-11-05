@@ -17,11 +17,18 @@
      text-align: right;
  }
 
+.links span, .links a{
+    color: white;
+    margin-right: 8px;
+}
+
  .links a {
-     color: white;
-     margin-right: 8px;
      text-decoration: none;
  }
+
+.links a:hover {
+    text-decoration: underline;
+}
 
  .heading {
      display: flex;
@@ -106,10 +113,25 @@ Login style
      text-align: center;
  }
 
+ #validation_error {
+     color: darkred;
+ }
   /*
 Register Style
  */
 
  .registration {
+     text-align: center;
+ }
+
+ /*
+Profile page style
+ */
+
+ .info_section {
+     text-align: center;
+ }
+
+ .title_section {
      text-align: center;
  }

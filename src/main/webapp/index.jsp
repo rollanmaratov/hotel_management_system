@@ -7,19 +7,30 @@
         <title>Hotel Dreamers</title>
         <link rel="stylesheet" href="style.css">
         <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@100;300;400;600;700;900&display=swap" rel="stylesheet">
-        <script src="scripts/jquery.min.js"></script>
+        <script src="http://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
         <script src="scripts/lodash.min.js"></script>
         <script type="text/javascript">
-        //here goes my script
-        
+
         </script>
     </head>
     <body>
-        <div class="links">
-            <a href="login.jsp">Log In or Register</a>
+        <div class="links" id="link">
+            <script>
+                let session = '<%= session.getAttribute("user") != null %>';
+                console.log(session);
+                if (session === "true") {
+                    let name = '${user.firstname} ${user.lastname}';
+                    console.log(name);
+                    document.write('<span class="profile_name"> Welcome, <a href="profilePage.jsp">' + name + '</a></span>');
+                    document.write(' <a href="logout.jsp"><b>Logout</b></a> </span>')
+                } else {
+                    document.write('<a href="login.jsp"><b>Login or Register</b></a>');
+                }
+            </script>
+
         </div>
         <div class="heading">
-            
+            <div id="hey"></div>
             <div class="hotel_logo">
                 <a href="index.jsp">
                 <span>Hotel <br> Dreamers</span>

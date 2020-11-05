@@ -4,7 +4,7 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Login Page</title>
+        <title>Profile Page</title>
         <link rel="stylesheet" href="style.css">
         <script src="http://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
         <script type="text/javascript"
@@ -40,7 +40,7 @@
     </head>
     <body>
         <div class="links">
-
+            <a href="logout.jsp"><b>Logout</b></a>
         </div>
         <div class="heading">
             
@@ -59,19 +59,22 @@
             </div>
         </div>
 
-        <div class="login">
-            <span class="title">Login</span>
-            <form method="POST" id="loginForm" action="login">
-                <input type="text" placeholder="Email" name="email" id="email" /> <br>
-                <input type="password" placeholder="Password" name="password" id="password" /> <br>
-                <button type="submit">Log In</button>
-                <br>${message}
-                <!-- <div id="validation_error"> </div>
-                <div id="ajax_response"> </div> -->
-                <p>New user? Register <a href="register.jsp">here</a></p>
-            </form>
+        <div class="title_section">
+            <span class="title"> User Profile </span>
         </div>
 
-   
+        <div class="info_section">
+            <span>First Name: ${user.firstname} </span> <br />
+            <span>Last Name: ${user.lastname}</span> <br />
+            <span>Email: ${user.email}</span>
+        </div>
+        <br />
+        <br />
+        <div class="title_section">
+            <span class="title"> My bookings </span>
+        </div>
+
+        <div class="booking_section"></div>
+
     </body>
 </html> 
