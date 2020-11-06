@@ -10,8 +10,20 @@
     <script src="scripts/jquery.min.js"></script>
     <script src="scripts/lodash.min.js"></script>
     <script type="text/javascript">
-        //here goes my script
+        $(document).ready(function() {
+            $("#searchForm").validate({
+                rules: {
+                    email: "required",
+                    password: "required",
+                },
 
+                messages: {
+                    email: "Please enter email",
+                    password: "Please enter password"
+                }
+            });
+
+        });
     </script>
 </head>
 <body>
@@ -34,15 +46,8 @@
         <a href="draft.html">Contacts</a>
     </div>
 </div>
-<!--<div class="about_hotel">
-    <span class="title"> HEY!</span>
-    <div class="text_wrapper">
-                <span id="oops">
-                    Oops! This page hasn't been written yet.
-                </span>
-    </div>
-</div>-->
-<form action="">
+
+<form method="POST" id="bookForm" action="search">
     <!--  General -->
     <div class="form-group">
         <h2 class="heading">Search rooms</h2>
@@ -51,23 +56,11 @@
         <div class="form-group">
             <h2 class="heading">Details</h2>
             <div class="grid">
-                <div class="col-1-4 col-1-4-sm">
                     <div class="controls">
                         <input type="date" id="arrive" class="floatLabel" name="arrive" value="<?php echo date('Y-m-d'); ?>">
                         <label for="arrive" class="label-date"><i class="fa fa-calendar"></i>&nbsp;&nbsp;Arrive</label>
-                    </div>
-                </div>
-                <div class="col-1-4 col-1-4-sm">
-                    <div class="controls">
                         <input type="date" id="depart" class="floatLabel" name="depart" value="<?php echo date('Y-m-d'); ?>" />
                         <label for="depart" class="label-date"><i class="fa fa-calendar"></i>&nbsp;&nbsp;Depart</label>
-                    </div>
-                </div>
-            </div>
-            <div class="grid">
-                <div class="col-1-3 col-1-3-sm">
-                    <div class="controls">
-                        <i class="fa fa-sort"></i>
                         <select class="floatLabel">
                             <option value="blank"></option>
                             <option value="1">1</option>
@@ -75,20 +68,12 @@
                             <option value="3">3</option>
                         </select>
                         <label id="fruit"><i class="fa fa-male"></i>&nbsp;&nbsp;People</label>
-                    </div>
-                </div>
-                <div class="col-1-3 col-1-3-sm">
-                    <div class="controls">
-                        <i class="fa fa-sort"></i>
                         <select class="floatLabel">
                             <option value="blank"></option>
                             <option value="deluxe" selected>1</option>
-
                         </select>
                         <label for="fruit">Room</label>
-                    </div>
-                </div>
-
+                <button type="submit">Search</button>
             </div>
         </div>
     </div>
