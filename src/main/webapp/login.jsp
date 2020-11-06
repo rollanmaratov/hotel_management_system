@@ -66,10 +66,6 @@
                 <label for="email" class="required">Email: </label><input type="text"  name="email" id="email" /> <br>
                 <label for="password" class="required">Password: </label><input type="password" name="password" id="password" /> <br>
                 <button type="submit">Log In</button>
-                <br>${message}
-                <script>
-                    console.log(message);
-                </script>
                 <p>New user? Register <a href="register.jsp">here</a></p>
             </form>
         </div>

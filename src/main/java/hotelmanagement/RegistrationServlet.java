@@ -16,10 +16,11 @@ public class RegistrationServlet extends HttpServlet{
 
         BufferedReader reader = request.getReader();
         Gson gson = new Gson();
-        //Guest guest = gson.fromJson(reader, Guest.class);
+        Guest guest = gson.fromJson(reader, Guest.class);
+        CustomerService service = new CustomerService();
+        service.createAccount(guest);
 
-        //System.out.println(guest.getFirstname());
-
+        response.setContentType("text/plain");
         response.getWriter().print("Success!");
     }
 }

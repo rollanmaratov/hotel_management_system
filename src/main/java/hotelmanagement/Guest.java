@@ -1,8 +1,8 @@
 package hotelmanagement;
 
 public class Guest extends User {
-    private String idType;
 
+    private String idType;
     private String idNumber;
     private String addressLine1;
     private String addressLine2;

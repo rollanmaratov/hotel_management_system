@@ -11,24 +11,12 @@
         <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@100;300;400;600;700;900&display=swap" rel="stylesheet">
         <script type="text/javascript">
 
-        // $(document).ready(function () {
-        //     $("#register_button").on('click', function()  {
-        //         setTimeout(function() {
-        //             $('#ajax_response').text('You successfully created a profile! <br> You will be redirected to login page in 5 seconds')
-        //         }, 5000)
-        //     });
-        // });
-
-        const isValidValue = element => {
-            return (!['checkbox', 'radio'].includes(element.type) || element.checked);
-        };
-
         const isValidElement = element => {
             return element.name && element.value;
         };
 
         const formToJSON = elements => [].reduce.call(elements, (data, element) => {
-            if (isValidElement(element) && isValidValue(element) && element.name!=='reppassword') {
+            if (isValidElement(element)  && element.name!=='reppassword') {
                 data[element.name] = element.value;
             }
             return data;
@@ -42,19 +30,14 @@
                 const reppassword = $("#reppassword").val()
                 if (password === reppassword) {
                     const data = formToJSON(form.elements)
-                    console.log("IM HERE")
-                    $.ajax({
-                        type:"POST",
-                        dataType:"json",
-                        contentType: "application/json",
-                        data: data,
-                        url:"register",
-                        success: function(r){
-                            $('#ajax_response').text(r)
-                            console.log(r)
-                        }
+                    const dataJson = JSON.stringify(data);
+                    console.log('json data', data);
+                    var p = $.post('register', dataJson);
+                    p.done(function (r) {
+                        console.log("RESPONSE GOT");
+                                $('#ajax_response').text(r)
+                                console.log(r)
                     })
-                    console.log("EXECUTED");
                 } else {
                     $('#ajax_response').text('Passwords do not match')
                     console.log('Passwords do not match')
@@ -99,17 +82,17 @@
 
             <label for="idType">Choose your Identification Document:</label> <br />
             <select name="idType" id="idType" required>
-                <option value="passport">Passport</option>
-                <option value="drivers license">Driver's License</option>
-                <option value="state id">State ID</option>
+                <option value="Passport">Passport</option>
+                <option value="Drivers License">Driver's License</option>
+                <option value="State id">State ID</option>
             </select>
             <br>
-            <input type="text" placeholder="Document Number" name="idNum" id="idNum" required> <br>
-            <input type="text" placeholder="Address line 1 (country, city, place)" id="address1" name="address1" required>
+            <input type="text" placeholder="Document Number" name="idNumber" id="idNumber" required> <br>
+            <input type="text" placeholder="Address line 1 (country, city, place)" id="addressLine1" name="addressLine1" required>
             <br>
-            <input type="text" placeholder="Address line 2 (any additional info)" id="address2" name="address2" > <br>
-            <input type="text" name="mphone" id="mphone" placeholder="Mobile Phone Number" pattern="+[0-9]{11}" required> <br>
-            <input type="text" name="hphone" id="hphone" placeholder="Home Phone Number" pattern="+[0-9]{11}"> <br>
+            <input type="text" placeholder="Address line 2 (any additional info)" id="addressLine2" name="addressLine2" > <br>
+            <input type="text" name="mobilePhoneNumber" id="mobilePhoneNumber" placeholder="Mobile Phone Number" pattern="+[0-9]{11}" required> <br>
+            <input type="text" name="homePhoneNumber" id="homePhoneNumber" placeholder="Home Phone Number" pattern="+[0-9]{11}"> <br>
             <input type="date" name="dateOfBirth" id="dateOfBirth" placeholder="yyyy-mm-dd"> <br>
             <!-- sex -->
 
