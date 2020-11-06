@@ -9,7 +9,8 @@
         <script src="http://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
         <script type="text/javascript"
                 src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.0/dist/jquery.validate.min.js"></script>
-        <script src="scripts/lodash.min.js"></script>
+
+        <script src="//netdna.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
         <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@100;300;400;600;700;900&display=swap" rel="stylesheet">
         <script type="text/javascript">
         //here goes my script
@@ -62,12 +63,13 @@
         <div class="login">
             <span class="title">Login</span>
             <form method="POST" id="loginForm" action="login">
-                <input type="text" placeholder="Email" name="email" id="email" /> <br>
-                <input type="password" placeholder="Password" name="password" id="password" /> <br>
+                <label for="email" class="required">Email: </label><input type="text"  name="email" id="email" /> <br>
+                <label for="password" class="required">Password: </label><input type="password" name="password" id="password" /> <br>
                 <button type="submit">Log In</button>
                 <br>${message}
-                <!-- <div id="validation_error"> </div>
-                <div id="ajax_response"> </div> -->
+                <script>
+                    console.log(message);
+                </script>
                 <p>New user? Register <a href="register.jsp">here</a></p>
             </form>
         </div>
