@@ -14,28 +14,35 @@
         <script type="text/javascript">
         //here goes my script
 
+        var session = '<%= session.getAttribute("user") != null %>';
+        console.log(${user.email})
+
+        function writeJson(data) {
+            console.log(data['firstName']);
+            $("#firstName").innerHTML(data['firstName']);
+            $("#lastName").innerHTML(data['lastName']);
+            $("#email").innerHTML(data['email']);
+            $("#addressLine1").innerHTML(data['addressLine1']);
+            $("#addressLine2").innerHTML(data['addressLine2']);
+            $("#idType").innerHTML(data['idType']);
+            $("#idNumber").innerHTML(data['idNumber']);
+            $("#mobilePhoneNumber").innerHTML(data['mobilePhoneNumber']);
+            $("#homePhoneNumber").innerHTML(data['homePhoneNumber']);
+            $("#sex").innerHTML(data['sex']);
+            $("#dateOfBirth").innerHTML(data['dateOfBirth']);
+        }
+
+        function getGuestInfo() {
+            $.post("profile_information", ${user.email}, function (data) {
+                //here data is json of every field it has
+                writeJson(data);
+            })
+        }
+
         $(document).ready(function() {
-            $("#loginForm").validate({ //from JQuery validate library
-                rules: {
-                    //email: {
-                    //    required: true,
-                    //    email: true
-                    //},
-                    email: "required",
-                    password: "required",
-                },
-
-                messages: {
-                    //email: {
-                    //    required: "Please enter email",
-                    //    email: "Please enter a valid email address"
-                    //},
-                    email: "Please enter email",
-                    password: "Please enter password"
-                }
-            });
-
+            getGuestInfo();
         });
+
     </script>
     </head>
     <body>
@@ -53,28 +60,43 @@
             <div class="services">
                 <a href="index.jsp"> Homepage </a>
                 <a href="draft.html">Create a Booking</a>
-                <a href="draft.html">Manage my Booking</a>
+                <a>Manage my Booking</a>
                 <a href="draft.html">Information</a>
                 <a href="draft.html">Contacts</a>
             </div>
         </div>
 
         <div class="title_section">
+            <span class="title"> My bookings </span>
+        </div>
+
+        <div class="bookings">
+            <div id="active_bookings">
+                <ul id="activeBookingList"></ul>
+            </div>
+
+            <div id="past_bookings">
+                <ul id="pastBookingList"></ul>
+            </div>
+        </div>
+        <br />
+        <br />
+
+        <div class="title_section">
             <span class="title"> User Profile </span>
         </div>
 
         <div class="info_section">
-            <span>First Name: ${user.firstname} </span> <br />
-            <span>Last Name: ${user.lastname}</span> <br />
-            <span>Email: ${user.email}</span>
+            <span>First Name: </span> <span id="firstName"></span>
+            <span>Last Name: </span> <span id="lastName"></span>
+            <span>Email: </span> <span id="email"></span>
+            <span>Address: </span> <span id="addressLine1"></span> <span id="addressLine2"></span>
+            <span>Document: </span> <span id="idType"></span> <span id="idNumber"></span>
+            <span>Mobile Phone Number: </span> <span id="mobilePhoneNumber"></span>
+            <span>Home Phone Number: </span> <span id="homePhoneNumber"></span>
+            <span>Sex: </span> <span id="sex"></span>
+            <span>Date of Birth: </span> <span id="dateOfBirth"></span>
         </div>
-        <br />
-        <br />
-        <div class="title_section">
-            <span class="title"> My bookings </span>
-        </div>
-
-        <div class="booking_section"></div>
 
     </body>
 </html> 

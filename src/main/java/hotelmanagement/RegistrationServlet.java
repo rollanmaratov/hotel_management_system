@@ -14,13 +14,17 @@ public class RegistrationServlet extends HttpServlet{
     public void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
+        response.setContentType("text/plain");
         BufferedReader reader = request.getReader();
         Gson gson = new Gson();
         Guest guest = gson.fromJson(reader, Guest.class);
         CustomerService service = new CustomerService();
-        service.createAccount(guest);
+        int ca = service.createAccount(guest);
+        if (ca == -1) {
+            response.getWriter().print("Account with this email already exists!");
+            return;
+        }
 
-        response.setContentType("text/plain");
         response.getWriter().print("Success!");
     }
 }

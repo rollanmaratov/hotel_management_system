@@ -17,7 +17,6 @@
         <div class="links" id="link">
             <script> //try to implement this with knockout js
                 let session = '<%= session.getAttribute("user") != null %>';
-                console.log(session);
                 if (session === "true") {
                     let name = '${user.firstname} ${user.lastname}';
                     console.log(name);
@@ -40,7 +39,7 @@
             <div class="services">
                 <a href="index.jsp"> Homepage </a>
                 <a href="draft.html">Create a Booking</a>
-                <a href="draft.html">Manage my Booking</a>
+                <a href="profilePage.jsp">Manage my Booking</a>
                 <a href="draft.html">Information</a>
                 <a href="draft.html">Contacts</a>
             </div>
