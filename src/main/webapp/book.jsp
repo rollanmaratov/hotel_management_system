@@ -7,23 +7,40 @@
     <title>Hotel Dreamers</title>
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@100;300;400;600;700;900&display=swap" rel="stylesheet">
+    <script src="http://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.0/dist/jquery.validate.min.js"></script>
+    <script src="//netdna.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
     <script src="scripts/jquery.min.js"></script>
     <script src="scripts/lodash.min.js"></script>
     <script type="text/javascript">
+        
+        var rooms = {
+            free: []
+        }
+        
         $(document).ready(function() {
             $("#searchForm").validate({
                 rules: {
-                    email: "required",
-                    password: "required",
+                    arrive: "required",
+                    depart: "required",
+                    people: "required",
+                    room: "required",
                 },
 
                 messages: {
-                    email: "Please enter email",
-                    password: "Please enter password"
+                    arrive: "Please enter email",
+                    depart: "Please enter password",
+                    people: "Please enter amount of people",
+                    room: "Please enter amount of rooms"
                 }
             });
+            
+
+
 
         });
+       
+        
     </script>
 </head>
 <body>
@@ -47,36 +64,37 @@
     </div>
 </div>
 
-<form method="POST" id="bookForm" action="search">
-    <!--  General -->
-    <div class="form-group">
+<form id="searchForm">
         <h2 class="heading">Search rooms</h2>
 
-        <!--  Details -->
-        <div class="form-group">
             <h2 class="heading">Details</h2>
             <div class="grid">
-                    <div class="controls">
-                        <input type="date" id="arrive" class="floatLabel" name="arrive" value="<?php echo date('Y-m-d'); ?>">
-                        <label for="arrive" class="label-date"><i class="fa fa-calendar"></i>&nbsp;&nbsp;Arrive</label>
-                        <input type="date" id="depart" class="floatLabel" name="depart" value="<?php echo date('Y-m-d'); ?>" />
-                        <label for="depart" class="label-date"><i class="fa fa-calendar"></i>&nbsp;&nbsp;Depart</label>
-                        <select class="floatLabel">
+                <div class="controls">
+                    <div id="arrive" class="required">
+                        <input type="date" class="floatLabel" name="arrive" value="<?php echo date('Y-m-d'); ?>">
+                        <label class="label-date"><i class="fa fa-calendar"></i>&nbsp;&nbsp;Arrive</label>
+                    </div>
+                    <div id="depart" class="required">
+                        <input type="date" class="floatLabel" name="depart" value="<?php echo date('Y-m-d'); ?>" />
+                        <label class="label-date"><i class="fa fa-calendar"></i>&nbsp;&nbsp;Depart</label>
+                    </div>
+                        <select class="floatLabel" id="people" class="required">
                             <option value="blank"></option>
                             <option value="1">1</option>
                             <option value="2" selected>2</option>
                             <option value="3">3</option>
                         </select>
-                        <label id="fruit"><i class="fa fa-male"></i>&nbsp;&nbsp;People</label>
-                        <select class="floatLabel">
+                        <label>People</label>
+                        <select class="floatLabel" id="room" class="required">
                             <option value="blank"></option>
-                            <option value="deluxe" selected>1</option>
+                            <option value="1" selected>1</option>
                         </select>
-                        <label for="fruit">Room</label>
-                <button type="submit">Search</button>
-            </div>
+                        <label>Room</label>
+                    <button id="searchButton" type="submit">Search</button>
+                </div>
+
+            <ul id="rooms"></ul>
         </div>
-    </div>
 </form>
 
 </body>
