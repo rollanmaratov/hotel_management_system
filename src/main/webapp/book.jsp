@@ -73,7 +73,7 @@
                 const dataJson = JSON.stringify(data);
 
                 console.log('json data', data);
-                var p = $.post('search', dataJson);
+                var p = $.get('search', dataJson);
 
                 p.done(function (r) {
                     rooms.free = r.list;
