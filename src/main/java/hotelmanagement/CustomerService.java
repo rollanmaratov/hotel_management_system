@@ -1,13 +1,15 @@
 package hotelmanagement;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class CustomerService {
 
     private static Connection connect(){
         try {
             Class.forName("com.mysql.jdbc.Driver");
-            return DriverManager.getConnection("jdbc:mysql://localhost/hotel","root","prinny");
+            return DriverManager.getConnection("jdbc:mysql://localhost/hotel","root","318740-adil7");
         } catch ( Exception e ) {
             System.err.println( e.getClass().getName() + ": " + e.getMessage() );
             System.exit(0);
@@ -97,6 +99,40 @@ public class CustomerService {
             conn.close();
 
             return user;
+
+        } catch ( Exception e ) {
+            System.err.println( e.getClass().getName() + ": " + e.getMessage() );
+            System.exit(0);
+        }
+
+        return null;
+    }
+    public List<room> checkrooms(String city, Date arrive, Date depart) throws SQLException{
+        try {
+            Connection conn = connect();
+            String sql = "SELECT r.city,r.num_room,r.capacity,r.price FROM rooms as r,booking as b WHERE r.city = ? and r.city=b.city and   arrive>All(select b.Depart from booking as b  ) and depart<All( select b.Arrive from booking as b) and (arrive<depart or arrive=depart)";
+            PreparedStatement stat = conn.prepareStatement(sql);
+
+            stat.setString(1, city);
+
+            ResultSet res = stat.executeQuery();
+
+            //room room = null;
+            List<room> list=new ArrayList<>() ;
+            while(res.next()){
+               room room = new room();
+                room.setCity(res.getString("city"));
+               room.setNum_room(res.getInt("num_room"));
+               room.setPrice(res.getInt("price"));
+                room.setCapacity(res.getInt("capacity"));
+                //room.setArrive(res.getDate("Arrive"));
+                //room.setDepart(res.getDate("Depart"));
+                list.add(room);
+            }
+
+            conn.close();
+
+            return list;
 
         } catch ( Exception e ) {
             System.err.println( e.getClass().getName() + ": " + e.getMessage() );
