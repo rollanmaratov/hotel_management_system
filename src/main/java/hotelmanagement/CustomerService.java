@@ -1,8 +1,6 @@
 package hotelmanagement;
 
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class CustomerService {
@@ -18,22 +16,6 @@ public class CustomerService {
 
         System.out.println("Connection failed");
         return null;
-    }
-
-    public boolean mailExists(String email){
-        try {
-            Connection conn = connect();
-            Statement stat = conn.createStatement();
-            ResultSet rs = stat.executeQuery("select email from User");
-
-            while(rs.next()) if(rs.getString("email").equals(email)) return true;
-        } catch ( Exception e ) {
-            System.err.println( e.getClass().getName() + ": " + e.getMessage() );
-            System.exit(0);
-        }
-
-        System.out.println("The account does not exit");
-        return false;
     }
 
     public String generateGuestID() {
@@ -54,11 +36,10 @@ public class CustomerService {
     }
 
 
-
     public int createAccount(Guest guest){
         try {
             Connection conn = connect();
-            String sql = "select * from User where email = ?;";
+            String sql = "select * from users where email = ?;";
             PreparedStatement check = conn.prepareStatement(sql);
             check.setString(1, guest.getEmail());
 
@@ -68,7 +49,7 @@ public class CustomerService {
             }
 
             PreparedStatement stat = conn.prepareStatement(
-                    "insert into User (email, firstname, lastname, password) values(?, ?, ?, ?)");
+                    "insert into users (email, firstname, lastname, password) values(?, ?, ?, ?)");
 
             stat.setString(1, guest.getEmail());
             stat.setString(2, guest.getFirstname());
@@ -78,12 +59,12 @@ public class CustomerService {
             stat.executeUpdate();
 
             stat = conn.prepareStatement(
-                    "insert into Guest (guestID, address, address2, identificationType , identificationNumber , mobilePhoneNumber, homePhoneNumber, guestEmail, sex, dateOfBirth) values(?, ?, ?, ?,?,?,?,?,?,?)");
+                    "insert into Guest (guestID, address, address2, identificationType, identificationNumber , mobilePhoneNumber, homePhoneNumber, guestEmail, sex, dateOfBirth) values(?, ?, ?, ?,?,?,?,?,?,?)");
 
             String guestId = generateGuestID();
             ResultSet rs = stat.executeQuery("select guestID from Guest");
+            while(rs.next()) if (rs.getString("guestID").equals(guestId)) guestId = generateGuestID();
 
-            while(rs.next()) if (rs.getString("guestID") == guestId) guestId = generateGuestID();
             stat.setString(1, guestId);
             stat.setString(2, guest.getAddressLine1());
             stat.setString(3, guest.getAddressLine2());
@@ -104,32 +85,11 @@ public class CustomerService {
         return 0;
     }
 
-//    public boolean passMatch(String email, String password){
-//        try {
-//            Connection conn = connect();
-//            Statement stat = conn.createStatement();
-//
-//            String exec = "select password from User where email='"+email+"'";
-//
-//            try (ResultSet rs = stat.executeQuery(exec)) {
-//                rs.next();
-//                if (rs.getString("password").equals(password)) return true;
-//                return false;
-//            }
-//
-//        } catch ( Exception e ) {
-//            System.err.println( e.getClass().getName() + ": " + e.getMessage() );
-//            System.exit(0);
-//        }
-//
-//        System.out.println("passwords do not match");
-//        return false;
-//    }
 
     public User checkLogin(String email, String password) throws SQLException{
         try {
             Connection conn = connect();
-            String sql = "SELECT * FROM User WHERE email = ? and password = ?";
+            String sql = "SELECT * FROM users WHERE email = ? and password = ?";
             PreparedStatement stat = conn.prepareStatement(sql);
 
             stat.setString(1, email);
@@ -140,13 +100,13 @@ public class CustomerService {
             User user = null;
             if(res.next()){
                 user = new User();
-                user.setFirstname(res.getString("firstname"));
-                user.setLastname(res.getString("lastname"));
-                user.setEmail(res.getString("email"));
+                user.setFirstname(res.getString("firstName"));
+                user.setLastname(res.getString("lastName"));
+                user.setEmail(email);
+                user.setPassword(password);
             }
 
             conn.close();
-
             return user;
 
         } catch ( Exception e ) {
@@ -157,12 +117,40 @@ public class CustomerService {
         return null;
     }
 
+    public User getUserInformation(String email) {
+        try {
+            Connection conn = connect();
+            String sql = "select firstName, lastName from users " +
+                    "where email = ?";
+
+            PreparedStatement stat = conn.prepareStatement(sql);
+            stat.setString(1, email);
+            ResultSet res = stat.executeQuery();
+
+            User user = null;
+            if(res.next()){
+                user = new Guest();
+                user.setEmail(email);
+                user.setFirstname(res.getString("firstName"));
+                user.setLastname(res.getString("lastName"));
+            }
+
+            conn.close();
+            return user;
+
+        } catch ( Exception e ) {
+            System.err.println( e.getClass().getName() + ": " + e.getMessage() );
+            System.exit(0);
+        }
+        return null;
+    }
+
     public Guest getProfileInformation(String email) {
         try {
             Connection conn = connect();
             String sql = "select firstName, lastName, password, address, address2," +
                     " identificationType, identificationNumber, mobilePhoneNumber," +
-                    " homePhoneNumber, sex, dateOfBirth from User, Guest " +
+                    " homePhoneNumber, sex, dateOfBirth from users, Guest " +
                     "where email = guestEmail and email = ?";
 
             PreparedStatement stat = conn.prepareStatement(sql);
@@ -188,7 +176,6 @@ public class CustomerService {
             }
 
             conn.close();
-
             return guest;
 
         } catch ( Exception e ) {

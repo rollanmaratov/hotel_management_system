@@ -1,11 +1,14 @@
 package hotelmanagement;
 
+import com.google.gson.Gson;
+
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.*;
 import javax.servlet.http.*;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.sql.SQLException;
 
 @WebServlet("/login")
@@ -13,6 +16,29 @@ public class LoginServlet extends HttpServlet {
 
     public LoginServlet(){
         super();
+    }
+
+    @Override
+    public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        HttpSession session = request.getSession(false);
+        if (session != null) {
+            Cookie[] cookies = request.getCookies();
+            for (Cookie cookie: cookies) {
+                System.out.println(cookie.getValue());
+            }
+            String email = cookies[1].getValue();
+            CustomerService service = new CustomerService();
+            User user = service.getUserInformation(email);
+
+            Gson gson = new Gson();
+            String s = gson.toJson(user);
+            //check
+            response.setContentType("application/json");
+            PrintWriter out = response.getWriter();
+
+            out.print(s);
+            out.flush();
+        }
     }
 
     @Override
@@ -30,6 +56,10 @@ public class LoginServlet extends HttpServlet {
             if (user != null) {
                 HttpSession session = request.getSession();
                 session.setAttribute("user", user);
+                Cookie cookie = new Cookie("userEmail", email);
+                cookie.setMaxAge(24*60*60); //valid for one day
+                cookie.setPath("/");
+                response.addCookie(cookie);
                 destPage = "index.jsp";
             } else {
                 String message = "Invalid email/password";

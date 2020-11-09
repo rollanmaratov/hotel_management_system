@@ -14,26 +14,44 @@
         <script type="text/javascript">
         //here goes my script
 
-        var session = '<%= session.getAttribute("user") != null %>';
-        console.log(${user.email})
+        function getCookie(cname) {
+            var name = cname + "=";
+            var decodedCookie = decodeURIComponent(document.cookie);
+            var ca = decodedCookie.split(';');
+            for(var i = 0; i <ca.length; i++) {
+                var c = ca[i];
+                while (c.charAt(0) === ' ') {
+                    c = c.substring(1);
+                }
+                if (c.indexOf(name) === 0) {
+                    return c.substring(name.length, c.length);
+                }
+            }
+            return "";
+        }
 
         function writeJson(data) {
             console.log(data['firstName']);
-            $("#firstName").innerHTML(data['firstName']);
-            $("#lastName").innerHTML(data['lastName']);
-            $("#email").innerHTML(data['email']);
-            $("#addressLine1").innerHTML(data['addressLine1']);
-            $("#addressLine2").innerHTML(data['addressLine2']);
-            $("#idType").innerHTML(data['idType']);
-            $("#idNumber").innerHTML(data['idNumber']);
-            $("#mobilePhoneNumber").innerHTML(data['mobilePhoneNumber']);
-            $("#homePhoneNumber").innerHTML(data['homePhoneNumber']);
-            $("#sex").innerHTML(data['sex']);
-            $("#dateOfBirth").innerHTML(data['dateOfBirth']);
+            $("#firstName").html(data['firstName']);
+            $("#lastName").html(data['lastName']);
+            $("#email").html(data['email']);
+            $("#addressLine1").html(data['addressLine1']);
+            $("#addressLine2").html(data['addressLine2']);
+            $("#idType").html(data['idType']);
+            $("#idNumber").html(data['idNumber']);
+            $("#mobilePhoneNumber").html(data['mobilePhoneNumber']);
+            $("#homePhoneNumber").html(data['homePhoneNumber']);
+            $("#sex").html(data['sex']);
+            $("#dateOfBirth").html(data['dateOfBirth']);
         }
 
         function getGuestInfo() {
-            $.post("profile_information", ${user.email}, function (data) {
+            var email = getCookie("userEmail");
+            var obj = {
+                "email": email
+            }
+            console.log("object is: ", obj)
+            $.post("profile_information", email, function (data) {
                 //here data is json of every field it has
                 writeJson(data);
             })
@@ -87,15 +105,15 @@
         </div>
 
         <div class="info_section">
-            <span>First Name: </span> <span id="firstName"></span>
-            <span>Last Name: </span> <span id="lastName"></span>
-            <span>Email: </span> <span id="email"></span>
-            <span>Address: </span> <span id="addressLine1"></span> <span id="addressLine2"></span>
-            <span>Document: </span> <span id="idType"></span> <span id="idNumber"></span>
-            <span>Mobile Phone Number: </span> <span id="mobilePhoneNumber"></span>
-            <span>Home Phone Number: </span> <span id="homePhoneNumber"></span>
-            <span>Sex: </span> <span id="sex"></span>
-            <span>Date of Birth: </span> <span id="dateOfBirth"></span>
+            <span>First Name: </span> <span id="firstName"></span> <br>
+            <span>Last Name: </span> <span id="lastName"></span><br>
+            <span>Email: </span> <span id="email"></span> <br>
+            <span>Address: </span> <span id="addressLine1"></span> <span id="addressLine2"></span> <br>
+            <span>Document: </span> <span id="idType"></span> <span id="idNumber"></span> <br>
+            <span>Mobile Phone Number: </span> <span id="mobilePhoneNumber"></span> <br>
+            <span>Home Phone Number: </span> <span id="homePhoneNumber"></span> <br>
+            <span>Sex: </span> <span id="sex"></span> <br>
+            <span>Date of Birth: </span> <span id="dateOfBirth"></span> <br>
         </div>
 
     </body>

@@ -11,22 +11,62 @@
         <script src="scripts/lodash.min.js"></script>
         <script type="text/javascript">
 
+            function getCookie(cname) {
+                var name = cname + "=";
+                var decodedCookie = decodeURIComponent(document.cookie);
+                var ca = decodedCookie.split(';');
+                for(var i = 0; i <ca.length; i++) {
+                    var c = ca[i];
+                    while (c.charAt(0) === ' ') {
+                        c = c.substring(1);
+                    }
+                    if (c.indexOf(name) === 0) {
+                        return c.substring(name.length, c.length);
+                    }
+                }
+                return "";
+            }
+
+            function checkCookie() {
+                var email = getCookie("userEmail");
+                if (email === "") {
+                    $("#link").html('<a href="login.jsp"><b>Login or Register</b></a>');
+                } else {
+                    $.get('login', email, function(data) {
+                        const name = data['firstname'] + ' ' + data['lastname'];
+                        console.log('name is: ', name);
+                        $("#link").html('<span class="profile_name"> Welcome, <a href="profilePage.jsp">' + name + '</a></span>' + ' <a href="logout.jsp"><b>Logout</b></a> </span>') ;
+                    })
+                }
+            }
+
+            function checkSession() {
+                let session = '<%= session.getAttribute("user") != null %>';
+                if (session !== "true") {
+                    document.cookie = "userEmail=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+                }
+            }
+
+            $(document).ready(function() {
+                checkSession();
+                checkCookie();
+            })
         </script>
     </head>
     <body>
         <div class="links" id="link">
-            <script> //try to implement this with knockout js
-                let session = '<%= session.getAttribute("user") != null %>';
-                if (session === "true") {
-                    let name = '${user.firstname} ${user.lastname}';
-                    console.log(name);
-                    document.write('<span class="profile_name"> Welcome, <a href="profilePage.jsp">' + name + '</a></span>');
-                    document.write(' <a href="logout.jsp"><b>Logout</b></a> </span>')
-                } else {
-                    document.write('<a href="login.jsp"><b>Login or Register</b></a>');
-                }
-            </script>
-
+<%--            <script>--%>
+<%--                let session = '<%= session.getAttribute("user") != null %>';--%>
+<%--                console.log(session);--%>
+<%--                if (session === "true") {--%>
+<%--                    let name = '${user.firstname} ${user.lastname}';--%>
+<%--                    console.log(name);--%>
+<%--                    document.write('<span class="profile_name"> Welcome, <a href="profilePage.jsp">' + name + '</a></span>');--%>
+<%--                    document.write(' <a href="logout.jsp"><b>Logout</b></a> </span>')--%>
+<%--                } else {--%>
+<%--                    document.write('<a href="login.jsp"><b>Login or Register</b></a>');--%>
+<%--                }--%>
+<%--            </script>--%>
         </div>
         <div class="heading">
             <div id="hey"></div>

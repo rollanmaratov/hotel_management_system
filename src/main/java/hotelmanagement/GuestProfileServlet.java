@@ -7,9 +7,11 @@ import javax.servlet.ServletException;
 import javax.servlet.annotation.*;
 import javax.servlet.http.*;
 
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
+import java.util.Enumeration;
 
 @WebServlet("/profile_information")
 public class GuestProfileServlet extends HttpServlet {
@@ -25,8 +27,9 @@ public class GuestProfileServlet extends HttpServlet {
     @Override
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         CustomerService service = new CustomerService();
-        String email = request.getParameter("email");
-        Guest guest = service.getProfileInformation(email);
+        Enumeration<String> email = request.getParameterNames();
+        Guest guest = service.getProfileInformation(email.nextElement());
+
         Gson gson = new Gson();
         String json = gson.toJson(guest);
         response.setContentType("application/json");
