@@ -26,6 +26,8 @@ public class LoginServlet extends HttpServlet {
             for (Cookie cookie: cookies) {
                 System.out.println(cookie.getValue());
             }
+            //cookies 1 for email
+            //cookies 2 for UserType
             String email = cookies[1].getValue();
             CustomerService service = new CustomerService();
             User user = service.getUserInformation(email);
@@ -56,10 +58,18 @@ public class LoginServlet extends HttpServlet {
             if (user != null) {
                 HttpSession session = request.getSession();
                 session.setAttribute("user", user);
-                Cookie cookie = new Cookie("userEmail", email);
-                cookie.setMaxAge(24*60*60); //valid for one day
-                cookie.setPath("/");
-                response.addCookie(cookie);
+                //create cookie with email to store user info
+                Cookie emailCookie = new Cookie("userEmail", email);
+                emailCookie.setMaxAge(24*60*60); //valid for one day
+                emailCookie.setPath("/");
+                response.addCookie(emailCookie);
+
+                //create cookie with usertype = employee or guest
+                String type = service.checkUserType(user);
+                Cookie userTypeCookie = new Cookie("userType", type);
+                userTypeCookie.setMaxAge(24*60*60); //valid for one day
+                userTypeCookie.setPath("/");
+                response.addCookie(userTypeCookie);
                 destPage = "index.jsp";
             } else {
                 String message = "Invalid email/password";

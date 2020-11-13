@@ -53,8 +53,8 @@
             
             <div class="services">
                 <a href="index.jsp"> Homepage </a>
-                <a href="draft.html">Create a Booking</a>
-                <a href="draft.html">Manage my Booking</a>
+                <a href="login.jsp">Create a Booking</a>
+                <a href="login.jsp">Manage my Booking</a>
                 <a href="draft.html">Information</a>
                 <a href="draft.html">Contacts</a>
             </div>

@@ -8,7 +8,7 @@ public class CustomerService {
     private static Connection connect(){
         try {
             Class.forName("com.mysql.jdbc.Driver");
-            return DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/Hotel_management","root","Backtoblack06");
+            return DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/hotel","root","Backtoblack06");
         } catch ( Exception e ) {
             System.err.println( e.getClass().getName() + ": " + e.getMessage() );
             System.exit(0);
@@ -39,7 +39,7 @@ public class CustomerService {
     public int createAccount(Guest guest){
         try {
             Connection conn = connect();
-            String sql = "select * from users where email = ?;";
+            String sql = "select * from User where email = ?;";
             PreparedStatement check = conn.prepareStatement(sql);
             check.setString(1, guest.getEmail());
 
@@ -49,7 +49,7 @@ public class CustomerService {
             }
 
             PreparedStatement stat = conn.prepareStatement(
-                    "insert into users (email, firstname, lastname, password) values(?, ?, ?, ?)");
+                    "insert into User (email, firstname, lastname, password) values(?, ?, ?, ?)");
 
             stat.setString(1, guest.getEmail());
             stat.setString(2, guest.getFirstname());
@@ -89,7 +89,7 @@ public class CustomerService {
     public User checkLogin(String email, String password) throws SQLException{
         try {
             Connection conn = connect();
-            String sql = "SELECT * FROM users WHERE email = ? and password = ?";
+            String sql = "SELECT * FROM User WHERE email = ? and password = ?";
             PreparedStatement stat = conn.prepareStatement(sql);
 
             stat.setString(1, email);
@@ -117,10 +117,44 @@ public class CustomerService {
         return null;
     }
 
+    public String checkUserType(User user) {
+        try {
+            Connection conn = connect();
+            String esql = "select employeeID from User, Employee " +
+                    "where email = employeeEmail and email = ?";
+
+            PreparedStatement stat = conn.prepareStatement(esql);
+            stat.setString(1, user.getEmail());
+            ResultSet eres = stat.executeQuery();
+
+            if(eres.next()){
+                return "employee";
+            }
+
+            String gsql = "select guestID from User, Guest " +
+                    "where email = guestEmail and email = ?";
+
+            PreparedStatement state = conn.prepareStatement(gsql);
+            state.setString(1, user.getEmail());
+            ResultSet gres = state.executeQuery();
+
+            if(gres.next()){
+                return "guest";
+            }
+
+            conn.close();
+
+        } catch ( Exception e ) {
+            System.err.println( e.getClass().getName() + ": " + e.getMessage() );
+            System.exit(0);
+        }
+        return null;
+    }
+
     public User getUserInformation(String email) {
         try {
             Connection conn = connect();
-            String sql = "select firstName, lastName from users " +
+            String sql = "select firstName, lastName from User " +
                     "where email = ?";
 
             PreparedStatement stat = conn.prepareStatement(sql);
@@ -150,7 +184,7 @@ public class CustomerService {
             Connection conn = connect();
             String sql = "select firstName, lastName, password, address, address2," +
                     " identificationType, identificationNumber, mobilePhoneNumber," +
-                    " homePhoneNumber, sex, dateOfBirth from users, Guest " +
+                    " homePhoneNumber, sex, dateOfBirth from User, Guest " +
                     "where email = guestEmail and email = ?";
 
             PreparedStatement stat = conn.prepareStatement(sql);
@@ -161,8 +195,11 @@ public class CustomerService {
             if(res.next()){
                 guest = new Guest();
                 guest.setEmail(email);
+                System.out.println(res.getString("firstName"));
                 guest.setFirstname(res.getString("firstName"));
+                System.out.println(guest.getFirstname());
                 guest.setLastname(res.getString("lastName"));
+                System.out.println(guest.getLastname());
                 guest.setAddressLine1(res.getString("address"));
                 guest.setAddressLine2(res.getString("address2"));
                 guest.setPassword(res.getString("Password"));

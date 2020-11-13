@@ -11,6 +11,7 @@
         <script src="scripts/lodash.min.js"></script>
         <script type="text/javascript">
 
+            //this function gets cookie by name
             function getCookie(cname) {
                 var name = cname + "=";
                 var decodedCookie = decodeURIComponent(document.cookie);
@@ -29,21 +30,30 @@
 
             function checkCookie() {
                 var email = getCookie("userEmail");
+                var userType = getCookie("userType");
                 if (email === "") {
                     $("#link").html('<a href="login.jsp"><b>Login or Register</b></a>');
-                } else {
+                    $("#create_booking").attr("href", "login.jsp")
+                    $("#manage_booking").attr("href", "login.jsp")
+                }
+                else if (email !== "" && userType === 'guest') {
+                    //gets all data about guest from login servlet
                     $.get('login', email, function(data) {
                         const name = data['firstname'] + ' ' + data['lastname'];
-                        console.log('name is: ', name);
                         $("#link").html('<span class="profile_name"> Welcome, <a href="profilePage.jsp">' + name + '</a></span>' + ' <a href="logout.jsp"><b>Logout</b></a> </span>') ;
+                        $("#create_booking").attr("href", "draft.html")
+                        $("#manage_booking").attr("href", "profilePage.jsp")
                     })
                 }
             }
 
             function checkSession() {
+                //this variable stores session
                 let session = '<%= session.getAttribute("user") != null %>';
+                //this line deletes cookie if it does not detect an active session
                 if (session !== "true") {
                     document.cookie = "userEmail=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+                    document.cookie = "userType=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
                 }
             }
 
@@ -55,18 +65,7 @@
     </head>
     <body>
         <div class="links" id="link">
-<%--            <script>--%>
-<%--                let session = '<%= session.getAttribute("user") != null %>';--%>
-<%--                console.log(session);--%>
-<%--                if (session === "true") {--%>
-<%--                    let name = '${user.firstname} ${user.lastname}';--%>
-<%--                    console.log(name);--%>
-<%--                    document.write('<span class="profile_name"> Welcome, <a href="profilePage.jsp">' + name + '</a></span>');--%>
-<%--                    document.write(' <a href="logout.jsp"><b>Logout</b></a> </span>')--%>
-<%--                } else {--%>
-<%--                    document.write('<a href="login.jsp"><b>Login or Register</b></a>');--%>
-<%--                }--%>
-<%--            </script>--%>
+        <%--  this line is later filled by js code  --%>
         </div>
         <div class="heading">
             <div id="hey"></div>
@@ -78,8 +77,8 @@
             
             <div class="services">
                 <a href="index.jsp"> Homepage </a>
-                <a href="draft.html">Create a Booking</a>
-                <a href="profilePage.jsp">Manage my Booking</a>
+                <a id="create_booking" href="">Create a Booking</a>
+                <a id="manage_booking" href="">Manage my Booking</a>
                 <a href="draft.html">Information</a>
                 <a href="draft.html">Contacts</a>
             </div>

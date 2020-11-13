@@ -31,9 +31,8 @@
         }
 
         function writeJson(data) {
-            console.log(data['firstName']);
-            $("#firstName").html(data['firstName']);
-            $("#lastName").html(data['lastName']);
+            $("#firstName").html(data['firstname']);
+            $("#lastName").html(data['lastname']);
             $("#email").html(data['email']);
             $("#addressLine1").html(data['addressLine1']);
             $("#addressLine2").html(data['addressLine2']);
@@ -47,12 +46,9 @@
 
         function getGuestInfo() {
             var email = getCookie("userEmail");
-            var obj = {
-                "email": email
-            }
-            console.log("object is: ", obj)
             $.post("profile_information", email, function (data) {
                 //here data is json of every field it has
+                console.log(data);
                 writeJson(data);
             })
         }
