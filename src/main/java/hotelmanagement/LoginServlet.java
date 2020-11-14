@@ -60,14 +60,14 @@ public class LoginServlet extends HttpServlet {
                 session.setAttribute("user", user);
                 //create cookie with email to store user info
                 Cookie emailCookie = new Cookie("userEmail", email);
-                emailCookie.setMaxAge(24*60*60); //valid for one day
+                emailCookie.setMaxAge(2*60*60); //valid for one day
                 emailCookie.setPath("/");
                 response.addCookie(emailCookie);
 
-                //create cookie with usertype = employee or guest
+                //create cookie with usertype = employeeType or guest
                 String type = service.checkUserType(user);
                 Cookie userTypeCookie = new Cookie("userType", type);
-                userTypeCookie.setMaxAge(24*60*60); //valid for one day
+                userTypeCookie.setMaxAge(2*60*60); //valid for one day
                 userTypeCookie.setPath("/");
                 response.addCookie(userTypeCookie);
                 destPage = "index.jsp";

@@ -120,16 +120,6 @@ public class CustomerService {
     public String checkUserType(User user) {
         try {
             Connection conn = connect();
-            String esql = "select employeeID from User, Employee " +
-                    "where email = employeeEmail and email = ?";
-
-            PreparedStatement stat = conn.prepareStatement(esql);
-            stat.setString(1, user.getEmail());
-            ResultSet eres = stat.executeQuery();
-
-            if(eres.next()){
-                return "employee";
-            }
 
             String gsql = "select guestID from User, Guest " +
                     "where email = guestEmail and email = ?";
@@ -138,8 +128,19 @@ public class CustomerService {
             state.setString(1, user.getEmail());
             ResultSet gres = state.executeQuery();
 
-            if(gres.next()){
+            if(gres.next()) {
                 return "guest";
+            }
+
+            String esql = "select position from User, Employee " +
+                    "where email = employeeEmail and email = ?";
+
+            PreparedStatement stat = conn.prepareStatement(esql);
+            stat.setString(1, user.getEmail());
+            ResultSet eres = stat.executeQuery();
+
+            if(eres.next()){
+                return eres.getString("position");
             }
 
             conn.close();

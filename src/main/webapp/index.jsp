@@ -45,6 +45,23 @@
                         $("#manage_booking").attr("href", "profilePage.jsp")
                     })
                 }
+                else if (email !== "" && userType === 'deskClerk') {
+                    $.get('login', email, function(data) {
+                        const name = data['firstname'] + ' ' + data['lastname'];
+                        $("#link").html('<span class="profile_name"> Welcome, <a href="clerkPage.jsp">' + name + '</a></span>' + ' <a href="logout.jsp"><b>Logout</b></a> </span>') ;
+                        $("#create_booking").html("");
+                        $("#manage_booking").attr("href", "clerkPage.jsp")
+                    })
+                }
+                else if (email !== "" && userType === 'manager') {
+                    $.get('login', email, function(data) {
+                        const name = data['firstname'] + ' ' + data['lastname'];
+                        $("#link").html('<span class="profile_name"> Welcome, <a href="managerPage.jsp">' + name + '</a></span>' + ' <a href="logout.jsp"><b>Logout</b></a> </span>') ;
+                        $("#create_booking").html("");
+                        $("#manage_booking").attr("href", "managerPage.jsp");
+                        $("#manage_booking").html("Manage");
+                    })
+                }
             }
 
             function checkSession() {
@@ -78,7 +95,7 @@
             <div class="services">
                 <a href="index.jsp"> Homepage </a>
                 <a id="create_booking" href="">Create a Booking</a>
-                <a id="manage_booking" href="">Manage my Booking</a>
+                <a id="manage_booking" href="">Manage Bookings</a>
                 <a href="draft.html">Information</a>
                 <a href="draft.html">Contacts</a>
             </div>

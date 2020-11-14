@@ -40,9 +40,7 @@
     </script>
     </head>
     <body>
-        <div class="links">
-
-        </div>
+        <div class="links"></div>
         <div class="heading">
             
             <div class="hotel_logo">
