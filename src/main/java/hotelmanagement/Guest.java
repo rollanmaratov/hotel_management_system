@@ -2,6 +2,9 @@ package hotelmanagement;
 
 public class Guest extends User {
 
+
+
+    private String guestID;
     private String idType;
     private String idNumber;
     private String addressLine1;
@@ -10,6 +13,14 @@ public class Guest extends User {
     private String homePhoneNumber;
     private String sex;
     private String dateOfBirth;
+
+    public String getGuestID() {
+        return guestID;
+    }
+
+    public void setGuestID(String guestID) {
+        this.guestID = guestID;
+    }
 
     public String getIdType() {
         return idType;

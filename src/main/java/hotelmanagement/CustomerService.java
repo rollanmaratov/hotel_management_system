@@ -1,6 +1,7 @@
 package hotelmanagement;
 
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class CustomerService {
@@ -185,7 +186,7 @@ public class CustomerService {
             Connection conn = connect();
             String sql = "select firstName, lastName, password, address, address2," +
                     " identificationType, identificationNumber, mobilePhoneNumber," +
-                    " homePhoneNumber, sex, dateOfBirth from User, Guest " +
+                    " homePhoneNumber, sex, dateOfBirth, guestID from User, Guest " +
                     "where email = guestEmail and email = ?";
 
             PreparedStatement stat = conn.prepareStatement(sql);
@@ -196,11 +197,8 @@ public class CustomerService {
             if(res.next()){
                 guest = new Guest();
                 guest.setEmail(email);
-                System.out.println(res.getString("firstName"));
                 guest.setFirstname(res.getString("firstName"));
-                System.out.println(guest.getFirstname());
                 guest.setLastname(res.getString("lastName"));
-                System.out.println(guest.getLastname());
                 guest.setAddressLine1(res.getString("address"));
                 guest.setAddressLine2(res.getString("address2"));
                 guest.setPassword(res.getString("Password"));
@@ -211,6 +209,7 @@ public class CustomerService {
                 guest.setSex(res.getString("sex"));
                 guest.setHomePhoneNumber(res.getString("homePhoneNumber"));
                 guest.setDateOfBirth(res.getString("dateOfBirth"));
+                guest.setGuestID(res.getString("guestID"));
             }
 
             conn.close();
@@ -221,6 +220,41 @@ public class CustomerService {
             System.exit(0);
         }
 
+        return null;
+    }
+
+    public ArrayList<Booking> getBooking(String guestID) {
+        try {
+            Connection conn = connect();
+            String sql = "SELECT * FROM Reservation WHERE guestID = ?";
+            PreparedStatement stat = conn.prepareStatement(sql);
+
+            stat.setString(1, guestID);
+
+            ResultSet res = stat.executeQuery();
+
+            ArrayList<Booking> bookings = new ArrayList<>();
+
+            while(res.next()){
+                Booking book = new Booking();
+                book.setReservationID(res.getString("reservationID"));
+                book.setCheckInDate(res.getString("checkInDate"));
+                book.setCheckOutDate(res.getString("checkOutDate"));
+                book.setReservationDate(res.getString("reservationDate"));
+                book.setGuestID(res.getString("guestID"));
+                book.setTypeName(res.getString("typeName"));
+                book.setDayOfTheWeek(res.getString("dayOftheWeek"));
+                book.setHotelID(res.getString("hotelID"));
+                bookings.add(book);
+            }
+            if (bookings.size() != 0) return bookings;
+
+            conn.close();
+
+        } catch ( Exception e ) {
+            System.err.println( e.getClass().getName() + ": " + e.getMessage() );
+            System.exit(0);
+        }
         return null;
     }
 }

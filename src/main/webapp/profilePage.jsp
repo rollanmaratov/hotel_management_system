@@ -30,7 +30,7 @@
             return "";
         }
 
-        function writeJson(data) {
+        function writeGuestInfoJson(data) {
             $("#firstName").html(data['firstname']);
             $("#lastName").html(data['lastname']);
             $("#email").html(data['email']);
@@ -47,14 +47,56 @@
         function getGuestInfo() {
             var email = getCookie("userEmail");
             $.post("profile_information", email, function (data) {
-                //here data is json of every field it has
-                console.log(data);
-                writeJson(data);
+                writeGuestInfoJson(data);
+            })
+        }
+
+        function compareDates(date) {
+            var today = new Date();
+            var d = date.split("-");
+            if (parseInt(d[0]) < today.getFullYear()) {
+                return false;
+            } else if (parseInt(d[0]) > today.getFullYear()) {
+                return true;
+            } else {
+                if (parseInt(d[1]) < today.getMonth()+1) {
+                    return false;
+                } else if (parseInt(d[1]) > today.getMonth()+1) {
+                    return true;
+                } else {
+                    return parseInt(d[2]) > today.getDate();
+                }
+            }
+        }
+
+        function updateList(bookings) {
+            //$("#active_bookings").html("");
+            bookings.forEach(function (booking) {
+                const resID = booking['reservationID']
+                const inDate = booking['checkInDate']
+                var isFuture = compareDates(inDate)
+                const outDate = booking['checkOutDate']
+                const resDate = booking['reservationDate']
+                const typeName = booking['typeName']
+                const hotelID = booking['hotelID']
+                if(isFuture) {
+                    $("#activeBookingList").append("<li>" + resID + inDate + outDate + resDate + typeName + hotelID + "</li>");
+                } else {
+                    $("#pastBookingList").append("<li>" + resID + inDate + outDate + resDate + typeName + hotelID + "</li>");
+                }
+            });
+        }
+
+        function getActiveBookings() {
+            var email = getCookie("userEmail");
+            $.get("get_bookings", email, function(data) {
+                updateList(data);
             })
         }
 
         $(document).ready(function() {
             getGuestInfo();
+            getActiveBookings();
         });
 
     </script>
@@ -86,10 +128,12 @@
 
         <div class="bookings">
             <div id="active_bookings">
+                <span>Current Bookings:</span> <br>
                 <ul id="activeBookingList"></ul>
             </div>
 
             <div id="past_bookings">
+                <span>Past Bookings:</span> <br>
                 <ul id="pastBookingList"></ul>
             </div>
         </div>
