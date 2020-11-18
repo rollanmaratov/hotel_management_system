@@ -69,8 +69,13 @@
             }
         }
 
+        function deleteItem(resID) {
+            $.post("cancel_booking", resID, function () {
+                console.log("success!")
+            })
+        }
+
         function updateList(bookings) {
-            //$("#active_bookings").html("");
             bookings.forEach(function (booking) {
                 const resID = booking['reservationID']
                 const inDate = booking['checkInDate']
@@ -79,15 +84,17 @@
                 const resDate = booking['reservationDate']
                 const typeName = booking['typeName']
                 const hotelID = booking['hotelID']
+
+                let deleteBooking = "<button onclick='deleteItem("+ resID +")'>Cancel</button>";
                 if(isFuture) {
-                    $("#activeBookingList").append("<li>" + resID + inDate + outDate + resDate + typeName + hotelID + "</li>");
+                    $("#activeBookingList").append("<li>" + resID + inDate + outDate + resDate + typeName + hotelID + deleteBooking + "</li>");
                 } else {
                     $("#pastBookingList").append("<li>" + resID + inDate + outDate + resDate + typeName + hotelID + "</li>");
                 }
             });
         }
 
-        function getActiveBookings() {
+        function getBookings() {
             var email = getCookie("userEmail");
             $.get("get_bookings", email, function(data) {
                 updateList(data);
@@ -96,7 +103,7 @@
 
         $(document).ready(function() {
             getGuestInfo();
-            getActiveBookings();
+            getBookings();
         });
 
     </script>

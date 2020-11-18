@@ -257,4 +257,20 @@ public class CustomerService {
         }
         return null;
     }
+
+    public void deleteBooking(String bookingID) {
+        try {
+            Connection conn = connect();
+            String deleteSql = "DELETE FROM Reservation where reservationID = ?";
+            PreparedStatement state = conn.prepareStatement(deleteSql);
+            state.setString(1, bookingID);
+            state.executeUpdate();
+
+            conn.close();
+
+        } catch ( Exception e ) {
+            System.err.println( e.getClass().getName() + ": " + e.getMessage() );
+            System.exit(0);
+        }
+    }
 }
