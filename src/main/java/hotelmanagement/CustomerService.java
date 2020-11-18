@@ -23,7 +23,7 @@ public class CustomerService {
         try {
             Connection conn = connect();
             Statement stat = conn.createStatement();
-            ResultSet rs = stat.executeQuery("select email from users");
+            ResultSet rs = stat.executeQuery("select email from user");
 
             while(rs.next()) if(rs.getString("email").equals(email)) return true;
         } catch ( Exception e ) {
@@ -39,7 +39,7 @@ public class CustomerService {
         try {
             Connection conn = connect();
             PreparedStatement stat = conn.prepareStatement(
-                    "insert into users (email, firstname, lastname, password) values(?, ?, ?, ?)");
+                    "insert into user (email, firstname, lastname, password) values(?, ?, ?, ?)");
 
             stat.setString(1, email);
             stat.setString(2, firstname);
@@ -55,32 +55,10 @@ public class CustomerService {
         }
     }
 
-//    public boolean passMatch(String email, String password){
-//        try {
-//            Connection conn = connect();
-//            Statement stat = conn.createStatement();
-//
-//            String exec = "select password from users where email='"+email+"'";
-//
-//            try (ResultSet rs = stat.executeQuery(exec)) {
-//                rs.next();
-//                if (rs.getString("password").equals(password)) return true;
-//                return false;
-//            }
-//
-//        } catch ( Exception e ) {
-//            System.err.println( e.getClass().getName() + ": " + e.getMessage() );
-//            System.exit(0);
-//        }
-//
-//        System.out.println("passwords do not match");
-//        return false;
-//    }
-
     public User checkLogin(String email, String password) throws SQLException{
         try {
             Connection conn = connect();
-            String sql = "SELECT * FROM users WHERE email = ? and password = ?";
+            String sql = "SELECT * FROM user WHERE email = ? and password = ?";
             PreparedStatement stat = conn.prepareStatement(sql);
 
             stat.setString(1, email);
@@ -107,27 +85,24 @@ public class CustomerService {
 
         return null;
     }
-    public List<room> checkrooms(String city, Date arrive, Date depart) throws SQLException{
+    public List<Room> checkRooms(String city, int capacity, Date arrive, Date depart) throws SQLException{
         try {
             Connection conn = connect();
-            String sql = "SELECT r.city,r.num_room,r.capacity,r.price FROM rooms as r,booking as b WHERE r.city = ? and r.city=b.city and   arrive>All(select b.Depart from booking as b  ) and depart<All( select b.Arrive from booking as b) and (arrive<depart or arrive=depart)";
+
+            String sql = "select * from reservation as res, room as r where";
             PreparedStatement stat = conn.prepareStatement(sql);
-
             stat.setString(1, city);
-
             ResultSet res = stat.executeQuery();
 
-            //room room = null;
-            List<room> list=new ArrayList<>() ;
+            List<Room> list = new ArrayList<>();
+
             while(res.next()){
-               room room = new room();
-                room.setCity(res.getString("city"));
-               room.setNum_room(res.getInt("num_room"));
-               room.setPrice(res.getInt("price"));
-                room.setCapacity(res.getInt("capacity"));
-                //room.setArrive(res.getDate("Arrive"));
-                //room.setDepart(res.getDate("Depart"));
-                list.add(room);
+                Room r = new Room();
+                r.setCity(res.getString("city"));
+                r.setNum_room(res.getInt("num_room"));
+                r.setPrice(res.getInt("price"));
+                r.setCapacity(res.getInt("capacity"));
+                list.add(r);
             }
 
             conn.close();

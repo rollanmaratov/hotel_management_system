@@ -28,21 +28,21 @@
         }
         
         $(document).ready(function() {
-            $("#searchForm").validate({
-                rules: {
-                    arrive: "required",
-                    depart: "required",
-                    people: "required",
-                    room: "required",
-                },
-
-                messages: {
-                    arrive: "Please enter email",
-                    depart: "Please enter password",
-                    people: "Please enter amount of people",
-                    room: "Please enter amount of rooms"
-                }
-            });
+//            $("#searchForm").validate({
+//                rules: {
+//                    arrive: "required",
+//                    depart: "required",
+//                    people: "required",
+//                    room: "required",
+//                },
+//
+//                messages: {
+//                    arrive: "Please enter email",
+//                    depart: "Please enter password",
+//                    people: "Please enter amount of people",
+//                    room: "Please enter amount of rooms"
+//                }
+//            });
             
             function updateList() {
                 $("#rooms").html("");
@@ -69,11 +69,11 @@
 
                 event.preventDefault(); //stops form from submitting
 
-                const data = formToJSON(form.elements)
-                const dataJson = JSON.stringify(data);
+                const data = formToJSON(form.elements);
+                //const dataJson = JSON.stringify(data);
 
                 console.log('json data', data);
-                var p = $.get('search', dataJson);
+                var p = $.get('search', data);
 
                 p.done(function (r) {
                     rooms.free = r.list;
@@ -119,17 +119,17 @@
 
             <div class="controls">
 
-                <div id="arrive" class="required">
-                    <input type="date" class="floatLabel" name="arrive" value="<?php echo date('Y-m-d'); ?>">
+                <div class="required">
+                    <input id="arrive" type="date" class="floatLabel" name="arrive" value="<?php echo date('Y-m-d'); ?>">
                     <label class="label-date"><i class="fa fa-calendar"></i>&nbsp;&nbsp;Arrive</label>
                 </div>
 
-                <div id="depart" class="required">
-                    <input type="date" class="floatLabel" name="depart" value="<?php echo date('Y-m-d'); ?>" />
+                <div class="required">
+                    <input id="depart" type="date" class="floatLabel" name="depart" value="<?php echo date('Y-m-d'); ?>" />
                     <label class="label-date"><i class="fa fa-calendar"></i>&nbsp;&nbsp;Depart</label>
                 </div>
 
-                <select class="floatLabel" id="people" class="required">
+                <select class="floatLabel" id="people" class="required" name="people">
                     <option value="blank"></option>
                     <option value="1">1</option>
                     <option value="2" selected>2</option>
@@ -137,22 +137,25 @@
                 </select>
 
                 <label>People</label>
-
-                <select class="floatLabel" id="room" class="required">
-                    <option value="blank"></option>
-                    <option value="1" selected>1</option>
+                
+                <select class="floatLabel" id="city" class="required" name="city">
+                    <option value="Astana">Astana</option>
+                    <option value="London" selected>London</option>
+                    <option value="New York">New York</option>
+                    <option value="Moscow">Moscow</option>
+                    <option value="Dubai">Dubai</option>
                 </select>
 
-                <label>Room</label>
+                <label>City</label> <br>
 
                 <button id="searchButton" type="submit">Search</button>
 
             </div>
 
-            <ul id="rooms"></ul>
-
         </div>
     </form>
+    
+     <ul id="rooms"></ul>
 </body>
 
 </html>

@@ -2,7 +2,7 @@ package hotelmanagement;
 
 import java.util.Date;
 
-public class room {
+public class Room {
     private String city;
     private int num_room;
     private int capacity;

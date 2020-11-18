@@ -30,47 +30,42 @@ public class SearchServlet extends HttpServlet {
 
     public void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        List<room> list=new ArrayList<>() ;
 
+        List<Room> list = new ArrayList<>();
 
         String city = request.getParameter("city").trim();
-        String capacity = request.getParameter("people").trim();
-        String arrive1 = request.getParameter("arrive").trim();
-        DateFormat dateFormat=new
-        SimpleDateFormat("dd/MM/yyyy");
+        int capacity = Integer.parseInt(request.getParameter("people").trim());
+        String arrTemp = request.getParameter("arrive").trim();
+        String depTemp = request.getParameter("depart").trim();
+
+        DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+
         Date arrive = null;
-        try {
-            arrive = (Date) dateFormat.parse(arrive1);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        String depart1 = request.getParameter("depart").trim();
-
-
-
         Date depart = null;
+
         try {
-            depart = (Date) dateFormat.parse(depart1);
+            arrive = (Date) dateFormat.parse(arrTemp);
+            depart = (Date) dateFormat.parse(depTemp);
         } catch (ParseException e) {
             e.printStackTrace();
         }
 
         CustomerService service = new CustomerService();
+
         try {
-             list=service.checkrooms(city,arrive,depart);
+             list = service.checkRooms(city, capacity, arrive, depart);
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
+
         String listJsonString = this.gson.toJson(list);
 
-        PrintWriter out = response.getWriter();
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");
+
+        PrintWriter out = response.getWriter();
+
         out.print(listJsonString);
         out.flush();
-        //Gson gson = new Gson();
-
-        //Object list;
-        return Response.ok(gson.toJson(list)).build();
     }
 }
