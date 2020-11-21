@@ -136,3 +136,15 @@ Profile page style
  .title_section {
      text-align: center;
  }
+ /*
+ manager
+  */
+ .days input[type=text]{
+     border: double #303960;
+     width: 10%;
+ }
+
+ .hrsslry {
+     border: double #303960;
+     width: 10%;
+ }

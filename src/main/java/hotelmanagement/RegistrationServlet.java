@@ -31,5 +31,6 @@ public class RegistrationServlet extends HttpServlet{
         }
         RequestDispatcher dispatcher = request.getRequestDispatcher(destPage);
         dispatcher.forward(request, response);
+        response.sendRedirect(destPage);
     }
 }

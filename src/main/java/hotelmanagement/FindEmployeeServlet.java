@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.Enumeration;
 
 @WebServlet("/find_employee")
@@ -19,22 +20,25 @@ public class FindEmployeeServlet extends HttpServlet {
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-        response.setContentType("text/plain");
+       response.setContentType("application/json");
         CustomerService service = new CustomerService();
         Enumeration<String> params = request.getParameterNames();
         int empID = Integer.parseInt(params.nextElement());
         Employee emp = service.findEmp(empID);
+        PrintWriter out = response.getWriter();
         if (emp != null) {
             Gson gson = new Gson();
             String json = gson.toJson(emp);
-            response.getWriter().print("employee found!");
+            System.out.println("EMPLOYEE POS" + emp.getPosition());
+            out.print(json);
         } else {
-            response.getWriter().print("employee not found!");
+            out.print("null");
         }
+        out.flush();
     }
 
     @Override
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
+        doPost(request,response);
     }
 }

@@ -318,4 +318,31 @@ public class CustomerService {
         }
         return null;
     }
+
+    public void manageEmp(Employee emp) {
+        try {
+            Connection conn = connect();
+            String sql = "update Employee set monHours = ?, tueHours = ?, wedHours = ?," +
+                    "thuHours = ?, friHours = ?, satHours = ?, sunHours = ?, hourSalary = ?" +
+                    "where employeeID = ?";
+            PreparedStatement state = conn.prepareStatement(sql);
+            state.setInt(1, emp.getMonHours());
+            state.setInt(2, emp.getTueHours());
+            state.setInt(3, emp.getWedHours());
+            state.setInt(4, emp.getThuHours());
+            state.setInt(5, emp.getFriHours());
+            state.setInt(6, emp.getSatHours());
+            state.setInt(7, emp.getSunHours());
+            state.setFloat(8, emp.getHourSalary());
+            state.setInt(9, emp.getUserID());
+            state.executeUpdate();
+
+            conn.close();
+
+        } catch ( Exception e ) {
+            System.err.println( e.getClass().getName() + ": " + e.getMessage() );
+            System.exit(0);
+        }
+    }
 }
+

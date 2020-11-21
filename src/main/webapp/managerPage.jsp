@@ -30,24 +30,18 @@
             return "";
         }
 
+        const isValidElement = element => {
+            return element.name && element.value;
+        };
 
-        function compareDates(date) {
-            var today = new Date();
-            var d = date.split("-");
-            if (parseInt(d[0]) < today.getFullYear()) {
-                return false;
-            } else if (parseInt(d[0]) > today.getFullYear()) {
-                return true;
-            } else {
-                if (parseInt(d[1]) < today.getMonth()+1) {
-                    return false;
-                } else if (parseInt(d[1]) > today.getMonth()+1) {
-                    return true;
-                } else {
-                    return parseInt(d[2]) > today.getDate();
-                }
+
+        const formToJSON = elements => [].reduce.call(elements, (data, element) => {
+            if (isValidElement(element) ) {
+                data[element.name] = element.value;
             }
-        }
+            return data;
+        }, {});
+
 
         function deleteItem(resID) {
             $.post("cancel_booking", resID, function () {
@@ -81,21 +75,51 @@
             })
         }
 
-        function findEmployee() {
-            const form = document.getElementById('search_emp');
-            form.addEventListener('submit', (event) => {
-                event.preventDefault(); //stops form from submitting
-                const id = $("#emp").val();
-                var p = $.post('find_employee', id);
-                p.done(function (data) {
-                    console.log("RESPONSE GOT");
-                    //const monday = data
+        function fillFields(emp, id) {
+            $("#foundEmp").show()
+            var form = document.getElementById("empForm")
+            $("#monHours").attr("value", emp["monHours"])
+            $("#tueHours").attr("value", emp["tueHours"])
+            $("#wedHours").attr("value", emp["wedHours"])
+            $("#thuHours").attr("value", emp["thuHours"])
+            $("#friHours").attr("value", emp["friHours"])
+            $("#satHours").attr("value", emp["satHours"])
+            $("#sunHours").attr("value", emp["sunHours"])
+            $("#hourSalary").attr("value", emp["hourSalary"])
+            $("#userID").attr("value", id)
+            $("#update").on("click", function() {
+                const data = formToJSON(form.elements)
+                console.log("passed data", data)
+                const dataJson = JSON.stringify(data)
+                var p = $.post('manage_employee', dataJson);
+                p.done(function () {
+                    console.log('success')
                 })
-            });
+            })
+        }
+
+        function findEmployee() {
+            const id = $("#emp").val();
+            console.log(id);
+            var p = $.get('find_employee', id);
+            p.done(function (data) {
+                console.log(data)
+                if (data !== null) {
+                    $("#no_employee").hide()
+                    fillFields(data, id)
+                } else if (data === null) {
+                    $("#foundEmp").hide()
+                    $("#no_employee").show()
+                    $("#no_employee").html("No employee matches this ID")
+                }
+            })
         }
 
         $(document).ready(function() {
-            findEmployee();
+
+            $("#search").on("click", function () {
+                findEmployee();
+            });
         });
 
     </script>
@@ -128,13 +152,31 @@
     <form id="search_emp">
         <label for="emp">Search Employee by ID</label>
         <input name="emp" id="emp" type="text">
-        <button>Search</button>
+        <button type="button" id="search">Search</button>
     </form>
 </div>
-<div id="foundEmp">
+<span id="no_employee"></span>
+<div id="foundEmp" style="display: none">
     <span id="employee"></span> <br>
-    <button>Manage hours</button>
-    <button>Manage payroll</button>
+    <form id="empForm">
+        <span id="wh">Working Hours: </span> <br>
+        <div class="days">
+            <label for="monHours">Monday:</label><input type="text" name="monHours" id="monHours">
+            <label for="tueHours">Tuesday:</label><input type="text" name="tueHours" id="tueHours">
+            <label for="wedHours">Wednesday:</label><input type="text" name="wedHours" id="wedHours">
+            <label for="thuHours">Thursday:</label><input type="text" name="thuHours" id="thuHours">
+            <label for="friHours">Friday:</label><input type="text" name="friHours" id="friHours">
+            <label for="satHours">Saturday:</label><input type="text" name="satHours" id="satHours">
+            <label for="sunHours">Sunday:</label><input type="text" name="sunHours" id="sunHours">
+            <input type="text" id="userID" name="userID" style="display: none">
+        </div>
+        <br>
+        <div class="hrsslry">
+            <label for="hourSalary">Salary: </label><input type="text" name="hourSalary" id="hourSalary">
+        </div>
+        <br><button type="button" id="update">Submit changes</button>
+    </form>
+
     <div id="response"></div>
 </div>
 

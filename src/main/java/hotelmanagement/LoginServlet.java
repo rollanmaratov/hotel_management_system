@@ -78,7 +78,6 @@ public class LoginServlet extends HttpServlet {
 
             RequestDispatcher dispatcher = request.getRequestDispatcher(destPage);
             dispatcher.forward(request, response);
-
         } catch (SQLException ex) {
             throw new ServletException(ex);
         }
