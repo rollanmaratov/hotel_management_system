@@ -39,7 +39,7 @@
                                 console.log(r)
                     })
                 } else {
-                    $('#ajax_response').text('Passwords do not match')
+                    $('#message').html('Passwords do not match')
                     console.log('Passwords do not match')
                 };
             });
@@ -91,8 +91,8 @@
             <input type="text" placeholder="Address line 1 (country, city, place)" id="addressLine1" name="addressLine1" required>
             <br>
             <input type="text" placeholder="Address line 2 (any additional info)" id="addressLine2" name="addressLine2" > <br>
-            <input type="text" name="mobilePhoneNumber" id="mobilePhoneNumber" placeholder="Mobile Phone Number" pattern="+[0-9]{11}" required> <br>
-            <input type="text" name="homePhoneNumber" id="homePhoneNumber" placeholder="Home Phone Number" pattern="+[0-9]{11}"> <br>
+            <input type="text" name="mobilePhoneNumber" id="mobilePhoneNumber" placeholder="Mobile Phone Number" pattern="\+[0-9]{11}" required> <br>
+            <input type="text" name="homePhoneNumber" id="homePhoneNumber" placeholder="Home Phone Number" pattern="\+[0-9]{11}"> <br>
             <input type="date" name="dateOfBirth" id="dateOfBirth" placeholder="yyyy-mm-dd"> <br>
             <!-- sex -->
 
@@ -105,7 +105,7 @@
 
             <input type="submit" id="register_button" value="Register">
         </form>
-        <div class="ajax_response"></div>
+        <div class="message">${message}</div>
     </div>
 </body>
 </html>

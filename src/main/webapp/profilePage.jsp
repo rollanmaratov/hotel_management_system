@@ -7,9 +7,7 @@
         <title>Profile Page</title>
         <link rel="stylesheet" href="style.css">
         <script src="http://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
-        <script type="text/javascript"
-                src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.0/dist/jquery.validate.min.js"></script>
-        <script src="scripts/lodash.min.js"></script>
+
         <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@100;300;400;600;700;900&display=swap" rel="stylesheet">
         <script type="text/javascript">
         //here goes my script
@@ -97,11 +95,23 @@
         function getBookings() {
             var email = getCookie("userEmail");
             $.get("get_bookings", email, function(data) {
-                updateList(data);
+                if (data !== null) {
+                    var b = document.getElementById("bookings")
+                    b.style.display = "block";
+                    updateList(data);
+                } else {
+                    var n = document.getElementById("no_bookings")
+                    n.style.display = "block";
+                    $("#no_bookings").html("You have no bookings yet")
+                }
             })
         }
 
         $(document).ready(function() {
+            var b = document.getElementById("bookings")
+            b.style.display = "none";
+            var n = document.getElementById("no_bookings")
+            n.style.display = "none";
             getGuestInfo();
             getBookings();
         });
@@ -133,7 +143,7 @@
             <span class="title"> My bookings </span>
         </div>
 
-        <div class="bookings">
+        <div id="bookings">
             <div id="active_bookings">
                 <span>Current Bookings:</span> <br>
                 <ul id="activeBookingList"></ul>
@@ -144,6 +154,7 @@
                 <ul id="pastBookingList"></ul>
             </div>
         </div>
+        <div id="no_bookings"></div>
         <br />
         <br />
 

@@ -6,7 +6,7 @@ public class Booking {
     private String checkInDate;
     private String checkOutDate;
     private String reservationDate;
-    private String guestID;
+    private int guestID;
     private String typeName;
     private String dayOfTheWeek;
     private String hotelID;
@@ -43,11 +43,11 @@ public class Booking {
         this.reservationDate = reservationDate;
     }
 
-    public String getGuestID() {
+    public int getGuestID() {
         return guestID;
     }
 
-    public void setGuestID(String guestID) {
+    public void setGuestID(int guestID) {
         this.guestID = guestID;
     }
 

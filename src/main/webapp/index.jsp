@@ -78,6 +78,7 @@
                 checkSession();
                 checkCookie();
             })
+
         </script>
     </head>
     <body>

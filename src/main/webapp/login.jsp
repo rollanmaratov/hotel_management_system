@@ -18,22 +18,21 @@
         $(document).ready(function() {
             $("#loginForm").validate({ //from JQuery validate library
                 rules: {
-                    //email: {
-                    //    required: true,
-                    //    email: true
-                    //},
-                    email: "required",
+                    email: {
+                        required: true,
+                        email: true
+                    },
                     password: "required",
                 },
 
                 messages: {
-                    //email: {
-                    //    required: "Please enter email",
-                    //    email: "Please enter a valid email address"
-                    //},
-                    email: "Please enter email",
+                    email: {
+                        required: "Please enter email",
+                        email: "Please enter a valid email address"
+                    },
                     password: "Please enter password"
                 }
+
             });
 
         });
@@ -61,9 +60,10 @@
         <div class="login">
             <span class="title">Login</span>
             <form method="POST" id="loginForm" action="login">
-                <label for="email" class="required">Email: </label><input type="text"  name="email" id="email" /> <br>
+                <label for="email" class="required">Email: </label><input type="email"  name="email" id="email" /> <br>
                 <label for="password" class="required">Password: </label><input type="password" name="password" id="password" /> <br>
                 <button type="submit">Log In</button>
+                <div class="message">${message}</div>
                 <p>New user? Register <a href="register.jsp">here</a></p>
             </form>
         </div>
