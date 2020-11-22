@@ -2,7 +2,6 @@ package hotelmanagement;
 
 public class Employee extends User {
     private String hotelID;
-    private int supervisorID;
     private String position;
     private int monHours;
     private int tueHours;
@@ -19,14 +18,6 @@ public class Employee extends User {
 
     public void setHotelID(String hotelID) {
         this.hotelID = hotelID;
-    }
-
-    public int getSupervisorID() {
-        return supervisorID;
-    }
-
-    public void setSupervisorID(int supervisorID) {
-        this.supervisorID = supervisorID;
     }
 
     public String getPosition() {

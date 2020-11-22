@@ -298,7 +298,6 @@ public class CustomerService {
                 emp.setHotelID(res.getString("hotelID"));
                 emp.setUserID(empID);
                 emp.setPosition(res.getString("position"));
-                emp.setSupervisorID(res.getInt("supervisorID"));
                 emp.setHourSalary(res.getFloat("hourSalary"));
                 emp.setMonHours(res.getInt("monHours"));
                 emp.setTueHours(res.getInt("tueHours"));

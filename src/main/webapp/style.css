@@ -140,11 +140,12 @@ Profile page style
  manager
   */
  .days input[type=text]{
-     border: double #303960;
-     width: 10%;
+     height: 15px;
+     width: 10px;
  }
 
  .hrsslry {
      border: double #303960;
-     width: 10%;
+     height: 15px;
+     width: 10px;
  }
