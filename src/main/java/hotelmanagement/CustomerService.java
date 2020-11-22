@@ -6,12 +6,12 @@ import java.util.concurrent.ThreadLocalRandom;
 
 public class CustomerService {
 
-    private static Connection connect(){
+    private static Connection connect() {
         try {
             Class.forName("com.mysql.jdbc.Driver");
-            return DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/hotel","root","Backtoblack06");
-        } catch ( Exception e ) {
-            System.err.println( e.getClass().getName() + ": " + e.getMessage() );
+            return DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/hotel", "root", "Toregister49!");
+        } catch (Exception e) {
+            System.err.println(e.getClass().getName() + ": " + e.getMessage());
             System.exit(0);
         }
 
@@ -25,7 +25,7 @@ public class CustomerService {
     }
 
 
-    public int createAccount(Guest guest){
+    public int createAccount(Guest guest) {
         try {
             Connection conn = connect();
             String sql = "select * from User where email = ?;";
@@ -69,15 +69,15 @@ public class CustomerService {
             System.out.println("Account created");
 
             conn.close();
-        } catch ( Exception e ) {
-            System.err.println( e.getClass().getName() + ": " + e.getMessage() );
+        } catch (Exception e) {
+            System.err.println(e.getClass().getName() + ": " + e.getMessage());
             System.exit(0);
         }
         return 0;
     }
 
 
-    public User checkLogin(String email, String password) throws SQLException{
+    public User checkLogin(String email, String password) throws SQLException {
         try {
             Connection conn = connect();
             //first check if user with this email exists
@@ -88,7 +88,7 @@ public class CustomerService {
 
             ResultSet res1 = state.executeQuery();
 
-            if(!res1.next()) {
+            if (!res1.next()) {
                 conn.close();
                 return null;
             }
@@ -103,7 +103,7 @@ public class CustomerService {
             ResultSet res = stat.executeQuery();
 
             User user = null;
-            if(res.next()){
+            if (res.next()) {
                 user = new User();
                 user.setFirstname(res.getString("firstName"));
                 user.setLastname(res.getString("lastName"));
@@ -115,8 +115,8 @@ public class CustomerService {
             conn.close();
             return user;
 
-        } catch ( Exception e ) {
-            System.err.println( e.getClass().getName() + ": " + e.getMessage() );
+        } catch (Exception e) {
+            System.err.println(e.getClass().getName() + ": " + e.getMessage());
             System.exit(0);
         }
 
@@ -134,7 +134,7 @@ public class CustomerService {
             state.setInt(1, user.getUserID());
             ResultSet gres = state.executeQuery();
 
-            if(gres.next()) {
+            if (gres.next()) {
                 conn.close();
                 return "guest";
             }
@@ -146,7 +146,7 @@ public class CustomerService {
             stat.setInt(1, user.getUserID());
             ResultSet eres = stat.executeQuery();
 
-            if(eres.next()){
+            if (eres.next()) {
                 String pos = eres.getString("position");
                 conn.close();
                 return pos;
@@ -154,8 +154,8 @@ public class CustomerService {
 
             conn.close();
 
-        } catch ( Exception e ) {
-            System.err.println( e.getClass().getName() + ": " + e.getMessage() );
+        } catch (Exception e) {
+            System.err.println(e.getClass().getName() + ": " + e.getMessage());
             System.exit(0);
         }
         return null;
@@ -172,7 +172,7 @@ public class CustomerService {
             ResultSet res = stat.executeQuery();
 
             User user = null;
-            if(res.next()){
+            if (res.next()) {
                 user = new Guest();
                 user.setEmail(email);
                 user.setFirstname(res.getString("firstName"));
@@ -182,8 +182,8 @@ public class CustomerService {
             conn.close();
             return user;
 
-        } catch ( Exception e ) {
-            System.err.println( e.getClass().getName() + ": " + e.getMessage() );
+        } catch (Exception e) {
+            System.err.println(e.getClass().getName() + ": " + e.getMessage());
             System.exit(0);
         }
         return null;
@@ -202,7 +202,7 @@ public class CustomerService {
             ResultSet res = stat.executeQuery();
 
             Guest guest = null;
-            if(res.next()){
+            if (res.next()) {
                 guest = new Guest();
                 guest.setEmail(email);
                 guest.setFirstname(res.getString("firstName"));
@@ -222,8 +222,8 @@ public class CustomerService {
             conn.close();
             return guest;
 
-        } catch ( Exception e ) {
-            System.err.println( e.getClass().getName() + ": " + e.getMessage() );
+        } catch (Exception e) {
+            System.err.println(e.getClass().getName() + ": " + e.getMessage());
             System.exit(0);
         }
 
@@ -242,7 +242,7 @@ public class CustomerService {
 
             ArrayList<Booking> bookings = new ArrayList<>();
 
-            while(res.next()){
+            while (res.next()) {
                 Booking book = new Booking();
                 book.setReservationID(res.getString("reservationID"));
                 book.setCheckInDate(res.getString("checkInDate"));
@@ -259,10 +259,12 @@ public class CustomerService {
 
             if (bookings.size() != 0) {
                 return bookings;
-            } else {return null;}
+            } else {
+                return null;
+            }
 
-        } catch ( Exception e ) {
-            System.err.println( e.getClass().getName() + ": " + e.getMessage() );
+        } catch (Exception e) {
+            System.err.println(e.getClass().getName() + ": " + e.getMessage());
             System.exit(0);
         }
         return null;
@@ -278,8 +280,8 @@ public class CustomerService {
 
             conn.close();
 
-        } catch ( Exception e ) {
-            System.err.println( e.getClass().getName() + ": " + e.getMessage() );
+        } catch (Exception e) {
+            System.err.println(e.getClass().getName() + ": " + e.getMessage());
             System.exit(0);
         }
     }
@@ -311,13 +313,12 @@ public class CustomerService {
             conn.close();
             return emp;
 
-        } catch ( Exception e ) {
-            System.err.println( e.getClass().getName() + ": " + e.getMessage() );
+        } catch (Exception e) {
+            System.err.println(e.getClass().getName() + ": " + e.getMessage());
             System.exit(0);
         }
         return null;
     }
-
     public void manageEmp(Employee emp) {
         try {
             Connection conn = connect();
@@ -335,11 +336,86 @@ public class CustomerService {
             state.setFloat(8, emp.getHourSalary());
             state.setInt(9, emp.getUserID());
             state.executeUpdate();
-
             conn.close();
 
-        } catch ( Exception e ) {
-            System.err.println( e.getClass().getName() + ": " + e.getMessage() );
+        } catch (Exception e) {
+            System.err.println(e.getClass().getName() + ": " + e.getMessage());
+            System.exit(0);
+        }
+    }
+    public ArrayList<Season> getSeason(String hotelID) {
+        try {
+            Connection conn = connect();
+            String sql = "select hotelID, name, startDate, endDate, alteringPrice"+
+            "from Season where hotelID = ?";
+            PreparedStatement state = conn.prepareStatement(sql);
+            state.setString(1, hotelID);
+            ResultSet res = state.executeQuery();
+            ArrayList<Season> seasonList = new ArrayList<Season>();
+            while(res.next()) {
+                String hotID = res.getString("hotelID");
+                String name = res.getString("name");
+                String startDate = res.getString("startDate");
+                String endDate = res.getString("endDate");
+                String alteringPrice = res.getString("alteringPrice");
+                Season seasonInfo = new Season(hotID, name, startDate, endDate, alteringPrice);
+                seasonList.add(seasonInfo);
+            }
+            conn.close();
+            return seasonList;
+        } catch (Exception e) {
+            System.err.println(e.getClass().getName() + ": " + e.getMessage());
+            System.exit(0);
+        }
+        return null;
+    }
+    public String getHotel( String email){
+        try {
+            Connection conn = connect();
+            String sql = "select hotelID from Employee" +
+            "join User on employeeID = userID" +
+            "where email = ? ";
+            PreparedStatement state = conn.prepareStatement(sql);
+            state.setString(1, email);
+            ResultSet res = state.executeQuery();
+            String resID = res.getString("hotelID");
+            conn.close();
+            return resID;
+        } catch (Exception e) {
+            System.err.println(e.getClass().getName() + ": " + e.getMessage());
+            System.exit(0);
+        }
+        return null;
+    }
+    public void editSeason(String hotelID, String name, String startDate, String endDate, String alteringPrice){
+        try {
+            Connection conn = connect();
+            String sql = "update Season set hotelID = ?, name = ?, startDate = ?, endDate = ?, alteringPrice = ?" +
+                    "where name = ?";
+            PreparedStatement state = conn.prepareStatement(sql);
+            state.setString(1, hotelID);
+            state.setString(2, name);
+            state.setString(3, startDate);
+            state.setString(4, endDate);
+            state.setString(5, alteringPrice);
+            state.executeUpdate();
+            conn.close();
+        } catch (Exception e) {
+            System.err.println(e.getClass().getName() + ": " + e.getMessage());
+            System.exit(0);
+        }
+    }
+    public void deleteSeason(String hotelID, String name){
+        try{
+            Connection conn = connect();
+            String sql = "delete from Season where hotelID = ? and name = ?";
+            PreparedStatement state = conn.prepareStatement(sql);
+            state.setString(1, hotelID);
+            state.setString(2, name);
+            state.executeUpdate();
+            conn.close();
+        }catch (Exception e) {
+            System.err.println(e.getClass().getName() + ": " + e.getMessage());
             System.exit(0);
         }
     }

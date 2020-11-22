@@ -36,7 +36,6 @@ public class FindEmployeeServlet extends HttpServlet {
         }
         out.flush();
     }
-
     @Override
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         doPost(request,response);

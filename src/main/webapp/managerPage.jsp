@@ -97,7 +97,6 @@
                 })
             })
         }
-
         function findEmployee() {
             const id = $("#emp").val();
             console.log(id);
@@ -115,13 +114,47 @@
             })
         }
 
+        // 3RD USER STORY
+        // delete season
+        function deleteSeason(resID) {
+            $.post("cancel_season", resID, function () {
+                console.log("success!")
+            })
+        }
+
+        // writeSeason
+        function writeSeason(seasons) {
+            seasons.forEach(function (season) {
+                const hID = season['hotelID']
+                const seasonName = season['name']
+                const sDate = season['startDate']
+                const eDate = season['endDate']
+                const altPrice = season['alteringPrice']
+
+                let deleteBooking = "<button onclick='deleteItem("+ resID +")'>Cancel</button>";
+                if(isFuture) {
+                    $("#activeBookingList").append("<li>" + resID + inDate + outDate + resDate + typeName + hotelID + deleteBooking + "</li>");
+                } else {
+                    $("#pastBookingList").append("<li>" + resID + inDate + outDate + resDate + typeName + hotelID + "</li>");
+                }
+            });
+        }
+        // getSeason
+        function getSeasons() {
+            var email = getCookie("userEmail");
+            $.get("get_seasons", email, function(data) {
+                updateList(data);
+            })
+        }
+
         $(document).ready(function() {
 
             $("#search").on("click", function () {
                 findEmployee();
             });
+            writeSeasons();
+            getSeasons();
         });
-
     </script>
 </head>
 <body>
@@ -179,6 +212,7 @@
 
     <div id="response"></div>
 </div>
-
+<div id = >
+</div>>
 </body>
 </html>
