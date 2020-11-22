@@ -1,8 +1,10 @@
 package hotelmanagement;
 
 import java.sql.*;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Date;
 
 public class CustomerService {
 
@@ -89,9 +91,12 @@ public class CustomerService {
         try {
             Connection conn = connect();
 
-            String sql = "select * from reservation as res, room as r where";
+            String sql = "";
             PreparedStatement stat = conn.prepareStatement(sql);
             stat.setString(1, city);
+            stat.setString(2, Integer.toString(capacity));
+            stat.setString(3, new SimpleDateFormat("dd-MM-yyyy").format(arrive));
+            stat.setString(4, new SimpleDateFormat("dd-MM-yyyy").format(depart));
             ResultSet res = stat.executeQuery();
 
             List<Room> list = new ArrayList<>();

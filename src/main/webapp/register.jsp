@@ -66,8 +66,8 @@
             <input type="text" placeholder="Address line 1 (country, city, place)" id="address1" name="address1" required>
             <br>
             <input type="text" placeholder="Address line 2 (any additional info)" id="address2" name="address2" > <br>
-            <input type="text" name="mphone" id="mphone" placeholder="Mobile Phone Number" pattern="+[0-9]{11}" required> <br>
-            <input type="text" name="hphone" id="hphone" placeholder="Home Phone Number" pattern="+[0-9]{11}"> <br>
+            <input type="text" name="mphone" id="mphone" placeholder="Mobile Phone Number" pattern="\+[0-9]{11}" required> <br>
+            <input type="text" name="hphone" id="hphone" placeholder="Home Phone Number" pattern="\+[0-9]{11}"> <br>
             <input type="date" name="dateOfBirth" id="dateOfBirth" placeholder="yyyy-mm-dd"> <br>
             <!-- sex -->
 
