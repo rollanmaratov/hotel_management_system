@@ -9,28 +9,26 @@ import javax.servlet.http.*;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.PrintWriter;
 
 @WebServlet("/register")
 public class RegistrationServlet extends HttpServlet{
     public void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
+        response.setContentType("application/json");
         BufferedReader reader = request.getReader();
         Gson gson = new Gson();
         Guest guest = gson.fromJson(reader, Guest.class);
         CustomerService service = new CustomerService();
         int ca = service.createAccount(guest);
-        String destPage = "register.jsp";
+        PrintWriter out = response.getWriter();
+
         if (ca == -1) {
-            //response.getWriter().print("Account with this email already exists!");
-            String message = "Account with this email already exists!";
-            request.setAttribute("message", message);
+            out.print("{\"message\": \"Account with this email already exists!\"}");
         } else {
-            //response.getWriter().print("Success!");
-            destPage = "index.jsp";
+            out.print("{\"message\": \"success\"}");
         }
-        RequestDispatcher dispatcher = request.getRequestDispatcher(destPage);
-        dispatcher.forward(request, response);
-        response.sendRedirect(destPage);
+        out.flush();
     }
 }

@@ -11,12 +11,17 @@
         <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@100;300;400;600;700;900&display=swap" rel="stylesheet">
         <script type="text/javascript">
 
+
         const isValidElement = element => {
             return element.name && element.value;
         };
 
+        const isValidValue = element => {
+            return (!['checkbox', 'radio'].includes(element.type) || element.checked);
+        };
+
         const formToJSON = elements => [].reduce.call(elements, (data, element) => {
-            if (isValidElement(element)  && element.name!=='reppassword') {
+            if (isValidElement(element) && isValidValue(element)  && element.name!=='reppassword') {
                 data[element.name] = element.value;
             }
             return data;
@@ -34,9 +39,11 @@
                     console.log('json data', data);
                     var p = $.post('register', dataJson);
                     p.done(function (r) {
-                        console.log("RESPONSE GOT");
-                                $('#ajax_response').text(r)
-                                console.log(r)
+                        if (r['message'] === 'success') {
+                            window.location.replace("index.jsp")
+                        } else {
+                            $('#message').html(r['message'])
+                        }
                     })
                 } else {
                     $('#message').html('Passwords do not match')
@@ -105,7 +112,7 @@
 
             <input type="submit" id="register_button" value="Register">
         </form>
-        <div class="message">${message}</div>
+        <div id="message"></div>
     </div>
 </body>
 </html>
