@@ -68,8 +68,9 @@
         }
 
         function deleteItem(resID) {
-            $.post("cancel_booking", resID, function () {
-                console.log("success!")
+            const res = resID.toString()
+            $.post("cancel_booking", res, function (r) {
+                console.log("response is:", r['message'])
             })
         }
 
@@ -83,11 +84,12 @@
                 const typeName = booking['typeName']
                 const hotelID = booking['hotelID']
 
-                let deleteBooking = "<button onclick='deleteItem("+ resID +")'>Cancel</button>";
+                let deleteBooking = "<button id=\"cancel_button\" type=\"button\" onclick='deleteItem("+ resID +")'>Cancel</button>";
+                let manageDates;
                 if(isFuture) {
-                    $("#activeBookingList").append("<li>" + resID + inDate + outDate + resDate + typeName + hotelID + deleteBooking + "</li>");
+                    $("#activeBookingList").append("<li class=\"one_booking\">Booking ID: " + resID + ", Check In date: " + inDate + ", Check Out date: " + outDate + ", Reservation date: " + resDate + ", Room: " + typeName + " in Hotel " +  hotelID + deleteBooking + "</li>");
                 } else {
-                    $("#pastBookingList").append("<li>" + resID + inDate + outDate + resDate + typeName + hotelID + "</li>");
+                    $("#pastBookingList").append("<li class=\"one_booking\">Booking ID: " + resID + ", Check In date: " + inDate + ", Check Out date: " + outDate + ", Reservation date: " + resDate + ", Room: " + typeName + " in Hotel " +  hotelID + "</li>");
                 }
             });
         }

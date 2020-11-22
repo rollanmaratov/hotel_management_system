@@ -8,7 +8,7 @@ public class Booking {
     private String reservationDate;
     private int guestID;
     private String typeName;
-    private String dayOfTheWeek;
+    private String roomNumber;
     private String hotelID;
 
     public String getReservationID() {
@@ -59,12 +59,12 @@ public class Booking {
         this.typeName = typeName;
     }
 
-    public String getDayOfTheWeek() {
-        return dayOfTheWeek;
+    public String getRoomNumber() {
+        return roomNumber;
     }
 
-    public void setDayOfTheWeek(String dayOfTheWeek) {
-        this.dayOfTheWeek = dayOfTheWeek;
+    public void setRoomNumber(String roomNumber) {
+        this.roomNumber = roomNumber;
     }
 
     public String getHotelID() {

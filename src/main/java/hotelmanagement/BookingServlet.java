@@ -24,6 +24,7 @@ public class BookingServlet extends HttpServlet {
         CustomerService service = new CustomerService();
         Enumeration<String> email = request.getParameterNames();
         Guest guest = service.getProfileInformation(email.nextElement());
+        System.out.println("User id is: " + guest.getUserID());
         ArrayList<Booking> bookings = service.getBooking(guest.getUserID());
         Gson gson = new Gson();
         String json = gson.toJson(bookings);

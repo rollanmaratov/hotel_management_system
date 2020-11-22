@@ -27,7 +27,9 @@ public class CancelBookingServlet extends HttpServlet {
         Enumeration<String> params = request.getParameterNames();
         String bookingID = params.nextElement();
         service.deleteBooking(bookingID);
-        response.setContentType("text/plain");
-        response.getWriter().print("Success!");
+        response.setContentType("application/json");
+        PrintWriter out = response.getWriter();
+        out.print("{ \"message\" : \"success\"}");
+        out.flush();
     }
 }

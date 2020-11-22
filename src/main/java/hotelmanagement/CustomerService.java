@@ -194,7 +194,7 @@ public class CustomerService {
             Connection conn = connect();
             String sql = "select firstName, lastName, password, address, address2," +
                     " identificationType, identificationNumber, mobilePhoneNumber," +
-                    " homePhoneNumber, sex, dateOfBirth from User join Guest on User.userID = Guest.guestID " +
+                    " homePhoneNumber, sex, dateOfBirth, userID from User join Guest on User.userID = Guest.guestID " +
                     "where email = ?";
 
             PreparedStatement stat = conn.prepareStatement(sql);
@@ -205,6 +205,7 @@ public class CustomerService {
             if(res.next()){
                 guest = new Guest();
                 guest.setEmail(email);
+                guest.setUserID(res.getInt("userID"));
                 guest.setFirstname(res.getString("firstName"));
                 guest.setLastname(res.getString("lastName"));
                 guest.setAddressLine1(res.getString("address"));
@@ -249,8 +250,8 @@ public class CustomerService {
                 book.setCheckOutDate(res.getString("checkOutDate"));
                 book.setReservationDate(res.getString("reservationDate"));
                 book.setGuestID(guestID);
+                book.setRoomNumber(res.getString("roomNumber"));
                 book.setTypeName(res.getString("typeName"));
-                book.setDayOfTheWeek(res.getString("dayOftheWeek"));
                 book.setHotelID(res.getString("hotelID"));
                 bookings.add(book);
             }
@@ -271,7 +272,7 @@ public class CustomerService {
     public void deleteBooking(String bookingID) {
         try {
             Connection conn = connect();
-            String deleteSql = "DELETE FROM Reservation where reservationID = ?";
+            String deleteSql = "delete from Reservation where reservationID = ?";
             PreparedStatement state = conn.prepareStatement(deleteSql);
             state.setString(1, bookingID);
             state.executeUpdate();
