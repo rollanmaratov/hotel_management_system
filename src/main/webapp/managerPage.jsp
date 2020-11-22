@@ -42,39 +42,6 @@
             return data;
         }, {});
 
-
-        function deleteItem(resID) {
-            $.post("cancel_booking", resID, function () {
-                console.log("success!")
-            })
-        }
-
-        function updateList(bookings) {
-            bookings.forEach(function (booking) {
-                const resID = booking['reservationID']
-                const inDate = booking['checkInDate']
-                var isFuture = compareDates(inDate)
-                const outDate = booking['checkOutDate']
-                const resDate = booking['reservationDate']
-                const typeName = booking['typeName']
-                const hotelID = booking['hotelID']
-
-                let deleteBooking = "<button onclick='deleteItem("+ resID +")'>Cancel</button>";
-                if(isFuture) {
-                    $("#activeBookingList").append("<li>" + resID + inDate + outDate + resDate + typeName + hotelID + deleteBooking + "</li>");
-                } else {
-                    $("#pastBookingList").append("<li>" + resID + inDate + outDate + resDate + typeName + hotelID + "</li>");
-                }
-            });
-        }
-
-        function getBookings() {
-            var email = getCookie("userEmail");
-            $.get("get_bookings", email, function(data) {
-                updateList(data);
-            })
-        }
-
         function fillFields(emp, id) {
             $("#foundEmp").show()
             var form = document.getElementById("empForm")
@@ -115,11 +82,131 @@
             })
         }
 
+        function createForm() {
+            var form = document.createElement('form');
+            //insert form attribute if needed
+
+            //Hotel Name
+            var input1 = document.createElement('input')
+            input1.setAttribute('type', 'text')
+            input1.type = 'text'
+            input1.id = 'name'
+            input1.name = 'name'
+
+            var label1 = document.createElement('label')
+            label1.htmlFor = 'name'
+            label1.innerHTML = 'Name: '
+
+            //Start Date
+            var input2 = document.createElement('input')
+            input2.setAttribute('type', 'text')
+            input2.type = 'date'
+            input2.id = 'startDate'
+            input2.name = 'startDate'
+
+            var label2 = document.createElement('label')
+            label2.htmlFor = 'startDate'
+            label2.innerHTML = 'Start Date: '
+
+            //End Date
+            var input3 = document.createElement('input')
+            input3.setAttribute('type', 'text')
+            input3.type = 'date'
+            input3.id = 'endDate'
+            input3.name = 'endDate'
+
+            var label3 = document.createElement('label')
+            label3.htmlFor = 'startDate'
+            label3.innerHTML = 'End Date: '
+
+            //altering Price
+            var input4 = document.createElement('input')
+            input4.setAttribute('type', 'text')
+            input4.type = 'text'
+            input4.id = 'alteringPrice'
+            input4.name = 'alteringPrice'
+
+            var label4 = document.createElement('label')
+            label4.htmlFor = 'alteringPrice'
+            label4.innerHTML = 'Markup: '
+
+            var button = document.createElement('button')
+            button.type = 'button'
+            button.id = 'seasonSubmit'
+
+            form.appendChild(input1)
+            form.appendChild(label1)
+
+            form.appendChild(input2)
+            form.appendChild(label2)
+
+            form.appendChild(input3)
+            form.appendChild(label3)
+
+            form.appendChild(input4)
+            form.appendChild(label4)
+
+            return form;
+        }
+
+        function editItem(name) {
+            var id = name + "id";
+            var li = document.getElementById(id)
+            var form = createForm()
+            var contents = li.textContent
+            li.innerHTML = ""
+            li.appendChild(form)
+            $("#seasonSubmit").on('click', function() {
+                //post
+                //li.textContent = contents
+            })
+        }
+
+        function deleteItem(name, hotelID) {
+            const json = {
+                name: name,
+                hotelID: hotelID
+            }
+
+            $.post('delete_season', JSON.stringify(json), function() {
+                console.log('successful deletion')
+            })
+        }
+
+        function displaySeasons(seasons) {
+            seasons.forEach(function (season) {
+                var hotelID = season['hotelID']
+                var name = season['name']
+                const startDate = season['startDate']
+                const endDate = season['endDate']
+                const alteringPrice = season['alteringPrice']
+                const editButton = "<button id=\"edit_button" + name + "\" type=\"button\" onclick='editItem("+ name +")'>Edit</button>"
+                const deleteButton = "<button id=\"delete_button" + name + "\" type=\"button\" onclick='deleteItem("+ name + ", " + hotelID +")'>Delete</button>"
+                const appendString = "<li class=\"season_entry\" id=\"" + name + "id\">Season Name: " + name + " Start Date: " + startDate + " End Date: " + endDate + " Markup: " + alteringPrice + editButton + deleteButton + "</li>"
+                $("#seasons_list").append(appendString)
+            })
+
+        }
+
+        function getSeasons() {
+            var email = getCookie("userEmail")
+            $.get('get_seasons', email, function(data) {
+                console.log("GOt obkects!!!", data)
+                if (data !== 'null') {
+                    displaySeasons(data)
+                } else {
+                    console.log(data)
+                }
+            })
+        }
+
         $(document).ready(function() {
 
             $("#search").on("click", function () {
                 findEmployee();
             });
+
+            getSeasons();
         });
 
     </script>
@@ -176,8 +263,16 @@
         </div>
         <br><button type="button" id="update">Submit changes</button>
     </form>
-
     <div id="response"></div>
+</div>
+
+<br>
+<div class="title_section">
+    <span class="title"> Manage Seasons </span>
+</div>
+
+<div id="seasons">
+    <ol id="seasons_list"></ol>
 </div>
 
 </body>

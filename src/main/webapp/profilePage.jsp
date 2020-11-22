@@ -84,7 +84,7 @@
                 const typeName = booking['typeName']
                 const hotelID = booking['hotelID']
 
-                let deleteBooking = "<button id=\"cancel_button\" type=\"button\" onclick='deleteItem("+ resID +")'>Cancel</button>";
+                let deleteBooking = "<button id=\"cancel_button" + resID + "\" type=\"button\" onclick='deleteItem("+ resID +")'>Cancel</button>";
                 let manageDates;
                 if(isFuture) {
                     $("#activeBookingList").append("<li class=\"one_booking\">Booking ID: " + resID + ", Check In date: " + inDate + ", Check Out date: " + outDate + ", Reservation date: " + resDate + ", Room: " + typeName + " in Hotel " +  hotelID + deleteBooking + "</li>");

@@ -344,5 +344,89 @@ public class CustomerService {
             System.exit(0);
         }
     }
+
+    public ArrayList<Season> getSeason(String hotelID) {
+        try {
+            Connection conn = connect();
+            String sql = "select * from Season where hotelID = ?";
+            PreparedStatement state = conn.prepareStatement(sql);
+            state.setString(1, hotelID);
+            ResultSet res = state.executeQuery();
+            System.out.println("Result set: " + res.next());
+            ArrayList<Season> seasonList = new ArrayList<Season>();
+
+            while(res.next()) {
+                String hotID = res.getString("hotelID");
+                String name = res.getString("name");
+                String startDate = res.getString("startDate");
+                String endDate = res.getString("endDate");
+                float alteringPric = res.getFloat("alteringPrice");
+                String alteringPrice = Float.toString(alteringPric);
+                Season seasonInfo = new Season(hotID, name, startDate, endDate, alteringPrice);
+                seasonList.add(seasonInfo);
+            }
+            conn.close();
+            return seasonList;
+        } catch (Exception e) {
+            System.err.println(e.getClass().getName() + ": " + e.getMessage());
+            System.exit(0);
+        }
+        return null;
+    }
+
+    public String getHotel( String email){
+        try {
+            Connection conn = connect();
+            String sql = "select hotelID from Employee" +
+                    " join User on employeeID = userID" +
+                    " where email = ? ";
+            PreparedStatement state = conn.prepareStatement(sql);
+            state.setString(1, email);
+            ResultSet res = state.executeQuery();
+            String resID = "";
+            if (res.next()) {
+                resID = res.getString("hotelID");
+            }
+            conn.close();
+            return resID;
+        } catch (Exception e) {
+            System.err.println(e.getClass().getName() + ": " + e.getMessage());
+            System.exit(0);
+        }
+        return null;
+    }
+
+    public void editSeason(String hotelID, String name, String startDate, String endDate, String alteringPrice){
+        try {
+            Connection conn = connect();
+            String sql = "update Season set hotelID = ?, name = ?, startDate = ?, endDate = ?, alteringPrice = ?" +
+                    " where name = ?";
+            PreparedStatement state = conn.prepareStatement(sql);
+            state.setString(1, hotelID);
+            state.setString(2, name);
+            state.setString(3, startDate);
+            state.setString(4, endDate);
+            state.setString(5, alteringPrice);
+            state.executeUpdate();
+            conn.close();
+        } catch (Exception e) {
+            System.err.println(e.getClass().getName() + ": " + e.getMessage());
+            System.exit(0);
+        }
+    }
+    public void deleteSeason(String hotelID, String name){
+        try{
+            Connection conn = connect();
+            String sql = "delete from Season where hotelID = ? and name = ?";
+            PreparedStatement state = conn.prepareStatement(sql);
+            state.setString(1, hotelID);
+            state.setString(2, name);
+            state.executeUpdate();
+            conn.close();
+        }catch (Exception e) {
+            System.err.println(e.getClass().getName() + ": " + e.getMessage());
+            System.exit(0);
+        }
+    }
 }
 
