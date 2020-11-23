@@ -8,7 +8,7 @@ public class Booking {
     private String reservationDate;
     private int guestID;
     private String typeName;
-    private String roomNumber;
+    private int roomNumber;
     private String hotelID;
 
     public String getReservationID() {
@@ -59,11 +59,11 @@ public class Booking {
         this.typeName = typeName;
     }
 
-    public String getRoomNumber() {
+    public int getRoomNumber() {
         return roomNumber;
     }
 
-    public void setRoomNumber(String roomNumber) {
+    public void setRoomNumber(int roomNumber) {
         this.roomNumber = roomNumber;
     }
 
