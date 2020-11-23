@@ -16,7 +16,7 @@ public class CustomerService {
     private static Connection connect(){
         try {
             Class.forName("com.mysql.jdbc.Driver");
-            return DriverManager.getConnection("jdbc:mysql://localhost:3306/hotel","root","prinny");
+            return DriverManager.getConnection("jdbc:mysql://localhost:3306/hotel","root","Backtoblack06");
         } catch ( Exception e ) {
             System.err.println( e.getClass().getName() + ": " + e.getMessage() );
             System.exit(0);

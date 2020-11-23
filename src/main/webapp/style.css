@@ -139,6 +139,8 @@ Profile page style
  /*
  manager
   */
+
+
  .days input[type=text]{
      height: 25px;
      width: 25px;
@@ -147,4 +149,40 @@ Profile page style
  .hrsslry input[type=text] {
      height: 25px;
      width: 25px;
+ }
+
+ .managerBlock {
+     margin-left: 10px;
+     margin-top: 5px;
+
+     padding-left: 10px;
+     padding-top: 10px;
+     padding-bottom: 10px;
+     border-style: solid;
+     border-color: #132743;
+     width: 90%;
+ }
+
+ #emp {
+     height: 25px;
+     width: 25px;
+ }
+
+button {
+    margin-left: 8px;
+     width: 100px;
+    height: 25px;
+ }
+
+ .seasons {
+     margin-left: 10px;
+     margin-top: 5px;
+ }
+
+ #wh {
+     font-weight: bold;
+ }
+
+ ul {
+     list-style-type: none;
  }
