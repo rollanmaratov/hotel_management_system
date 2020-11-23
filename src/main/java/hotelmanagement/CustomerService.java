@@ -1,7 +1,10 @@
 package hotelmanagement;
 
 import java.sql.*;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class CustomerService {
@@ -9,7 +12,7 @@ public class CustomerService {
     private static Connection connect(){
         try {
             Class.forName("com.mysql.jdbc.Driver");
-            return DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/hotel","root","Backtoblack06");
+            return DriverManager.getConnection("jdbc:mysql://localhost:3306/hotel","root","prinny");
         } catch ( Exception e ) {
             System.err.println( e.getClass().getName() + ": " + e.getMessage() );
             System.exit(0);
@@ -345,23 +348,90 @@ public class CustomerService {
         }
     }
 
+    public List<Room> checkRooms(String city, int capacity, Date arrive, Date depart) throws SQLException{
+        try {
+            Connection conn = connect();
+
+            String sql = "select distinct h.address, r.typeName, rt.capacity, rt.monPrice, rt.sunPrice from reservation as res, room as r, hotel as h, roomtype as rt " +
+                    "where r.typeName = rt.typeName and rt.capacity >= ? " +
+                    "and r.hotelID = h.hotelID and rt.hotelID = h.hotelID and h.address = ? and " +
+                    "not ((res.checkInDate <= ? and res.checkOutDate >= ?) or " +
+                    "(res.checkInDate <= ? and res.checkOutDate >= ?) or " +
+                    "(res.checkInDate >= ? and res.checkOutDate <= ?)) group by r.typeName;";
+
+            PreparedStatement stat = conn.prepareStatement(sql);
+            stat.setString(1, Integer.toString(capacity));
+            stat.setString(2, city);
+            stat.setString(3, new SimpleDateFormat("yyyy-MM-dd").format(arrive));
+            stat.setString(4, new SimpleDateFormat("yyyy-MM-dd").format(arrive));
+            stat.setString(5, new SimpleDateFormat("yyyy-MM-dd").format(depart));
+            stat.setString(6, new SimpleDateFormat("yyyy-MM-dd").format(depart));
+            stat.setString(7, new SimpleDateFormat("yyyy-MM-dd").format(arrive));
+            stat.setString(8, new SimpleDateFormat("yyyy-MM-dd").format(depart));
+
+            ResultSet res = stat.executeQuery();
+
+            List<Room> list = new ArrayList<>();
+
+            Calendar start = Calendar.getInstance();
+            Calendar end = Calendar.getInstance();
+            Calendar dat1 = Calendar.getInstance();
+            Calendar dat2 = Calendar.getInstance();
+
+            dat1.setTime(arrive);
+            dat2.setTime(depart);
+
+            start.set(dat1.get(Calendar.YEAR), dat1.get(Calendar.MONTH), dat1.get(Calendar.DAY_OF_MONTH));
+            end.set(dat2.get(Calendar.YEAR), dat2.get(Calendar.MONTH), dat2.get(Calendar.DAY_OF_MONTH));
+
+            float tempPrice = 0;
+
+            while(res.next()){
+                Room r = new Room();
+                r.setCity(res.getString("address"));
+                r.setTypeName(res.getString("typename"));
+                r.setCapacity(res.getInt("capacity"));
+
+                while(start.before(end)){
+                    if(start.get(Calendar.DAY_OF_WEEK) == Calendar.SATURDAY || start.get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY){
+                        tempPrice = tempPrice + res.getFloat("sunPrice");
+                    } else {
+                        tempPrice = tempPrice + res.getFloat("monPrice");
+                    }
+                    start.add(Calendar.DATE, 1);
+                }
+
+                r.setPrice(tempPrice);
+                list.add(r);
+            }
+
+            conn.close();
+
+            return list;
+
+        } catch ( Exception e ) {
+            System.err.println( e.getClass().getName() + ": " + e.getMessage() );
+            System.exit(0);
+        }
+
+        return null;
+    }
+
     public ArrayList<Season> getSeason(String hotelID) {
         try {
             Connection conn = connect();
-            String sql = "select * from Season where hotelID = ?";
+            String sql = "select hotelID, name, startDate, endDate, alteringPrice "+
+                    "from Season where hotelID = ?";
             PreparedStatement state = conn.prepareStatement(sql);
             state.setString(1, hotelID);
             ResultSet res = state.executeQuery();
-            System.out.println("Result set: " + res.next());
             ArrayList<Season> seasonList = new ArrayList<Season>();
-
             while(res.next()) {
                 String hotID = res.getString("hotelID");
                 String name = res.getString("name");
                 String startDate = res.getString("startDate");
                 String endDate = res.getString("endDate");
-                float alteringPric = res.getFloat("alteringPrice");
-                String alteringPrice = Float.toString(alteringPric);
+                String alteringPrice = res.getString("alteringPrice");
                 Season seasonInfo = new Season(hotID, name, startDate, endDate, alteringPrice);
                 seasonList.add(seasonInfo);
             }
@@ -373,20 +443,17 @@ public class CustomerService {
         }
         return null;
     }
-
     public String getHotel( String email){
         try {
             Connection conn = connect();
-            String sql = "select hotelID from Employee" +
-                    " join User on employeeID = userID" +
-                    " where email = ? ";
+            String sql = "select hotelID from Employee "+
+                    "join User on employeeID = userID "+
+                    "where email = ? ";
             PreparedStatement state = conn.prepareStatement(sql);
             state.setString(1, email);
             ResultSet res = state.executeQuery();
-            String resID = "";
-            if (res.next()) {
-                resID = res.getString("hotelID");
-            }
+            res.next();
+            String resID = res.getString("hotelID");
             conn.close();
             return resID;
         } catch (Exception e) {
@@ -395,12 +462,30 @@ public class CustomerService {
         }
         return null;
     }
-
     public void editSeason(String hotelID, String name, String startDate, String endDate, String alteringPrice){
         try {
             Connection conn = connect();
             String sql = "update Season set hotelID = ?, name = ?, startDate = ?, endDate = ?, alteringPrice = ?" +
-                    " where name = ?";
+                    "where name = ?";
+            PreparedStatement state = conn.prepareStatement(sql);
+            state.setString(1, hotelID);
+            state.setString(2, name);
+            state.setString(3, startDate);
+            state.setString(4, endDate);
+            state.setString(5, alteringPrice);
+            state.setString(6, name);
+            state.executeUpdate();
+            conn.close();
+        } catch (Exception e) {
+            System.err.println(e.getClass().getName() + ": " + e.getMessage());
+            System.exit(0);
+        }
+    }
+    public void createSeason(String hotelID, String name, String startDate, String endDate, String alteringPrice){
+        try {
+            Connection conn = connect();
+            String sql = "insert into Season (hotelID , name, startDate, endDate, alteringPrice) " +
+                    "values(?, ?, ?, ?, ?)";
             PreparedStatement state = conn.prepareStatement(sql);
             state.setString(1, hotelID);
             state.setString(2, name);
@@ -424,6 +509,55 @@ public class CustomerService {
             state.executeUpdate();
             conn.close();
         }catch (Exception e) {
+            System.err.println(e.getClass().getName() + ": " + e.getMessage());
+            System.exit(0);
+        }
+    }
+    public void createBooking(  String reservationID, String checkInDate,
+                                String checkOutDate, String reservationDate, int guestID,
+                                String typeName, String dayOfTheWeek, String hotelID) {
+        try {
+            Connection conn = connect();
+            String sql = "insert into Reservation (reservationID, checkInDate, checkOutDate, reservationDate, guestID, " +
+                    "typeName, dayOfTheWeek, hotelID) " +
+                    "values(?, ?, ?, ?, ?, ?, ?, ?)";
+            PreparedStatement state = conn.prepareStatement(sql);
+            state.setString(1, reservationID);
+            state.setString(2, checkInDate);
+            state.setString(3, checkOutDate);
+            state.setString(4, reservationDate);
+            state.setInt(5, guestID);
+            state.setString(6, typeName);
+            state.setString(7, dayOfTheWeek);
+            state.setString(8, hotelID);
+            state.executeUpdate();
+            conn.close();
+        } catch (Exception e) {
+            System.err.println(e.getClass().getName() + ": " + e.getMessage());
+            System.exit(0);
+        }
+    }
+    public void editBooking(  String reservationID, String checkInDate,
+                              String checkOutDate, String reservationDate, int guestID,
+                              String typeName, String dayOfTheWeek, String hotelID) {
+        try {
+            Connection conn = connect();
+            String sql = "update Reservation  set reservationID = ?, checkInDate = ?, checkOutDate = ?, reservationDate = ?, guestID = ?, " +
+                    "typeName = ?, dayOfTheWeek = ?, hotelID = ?) " +
+                    "where ReservationID = ?";
+            PreparedStatement state = conn.prepareStatement(sql);
+            state.setString(1, reservationID);
+            state.setString(2, checkInDate);
+            state.setString(3, checkOutDate);
+            state.setString(4, reservationDate);
+            state.setInt(5, guestID);
+            state.setString(6, typeName);
+            state.setString(7, dayOfTheWeek);
+            state.setString(8, hotelID);
+            state.setString(9, reservationID);
+            state.executeUpdate();
+            conn.close();
+        } catch (Exception e) {
             System.err.println(e.getClass().getName() + ": " + e.getMessage());
             System.exit(0);
         }
