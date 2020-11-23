@@ -47,9 +47,10 @@ public class SearchServlet extends HttpServlet {
         depart = Date.valueOf(depTemp);
 
         CustomerService service = new CustomerService();
+        Cookie[] cookies = request.getCookies();
 
         try {
-            list = service.checkRooms(city, capacity, arrive, depart);
+            list = service.checkRooms(city, capacity, arrive, depart, cookies[1]);
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }

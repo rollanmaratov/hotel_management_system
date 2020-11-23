@@ -54,13 +54,20 @@
                 inputElement.value = "book"
 
                 inputElement.addEventListener('click', function(){
-                    rooms.free[p].arrive = form.elements.arrive.value;
-                    rooms.free[p].depart = form.elements.depart.value;
+                    rooms.free[p].checkInDate = form.elements.arrive.value;
+                    rooms.free[p].checkOutDate = form.elements.depart.value;
+                    
+                    let date_ob = new Date();
+                    let date = ("0" + date_ob.getDate()).slice(-2);
+                    let month = ("0" + (date_ob.getMonth() + 1)).slice(-2);
+                    let year = date_ob.getFullYear();
+
+                    rooms.free[p].reservationDate = year + "-" + month + "-" + date;
 
                     console.log(rooms.free[p]);
 
                     $.post('create_booking', rooms.free[p]);
-                    window.location.href = "index.jsp";
+                    //window.location.href = "index.jsp";
                 });
 
                 $("#rooms").append("<li>" + e.city + '   Type of Room: ' + e.typeName + '   Capacity: ' + e.capacity + "</li>").append(inputElement);

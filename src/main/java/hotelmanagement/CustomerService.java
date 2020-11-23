@@ -1,5 +1,9 @@
 package hotelmanagement;
 
+import com.sun.deploy.net.HttpRequest;
+
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
 import java.sql.*;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -453,6 +457,17 @@ public class CustomerService {
                                 String checkOutDate, String reservationDate, int guestID,
                                 String typeName, String hotelID, int roomNumber) {
         try {
+            System.out.println(reservationID);
+            System.out.println(checkInDate);
+            System.out.println(checkOutDate);
+            System.out.println(reservationDate);
+            System.out.println(guestID);
+            System.out.println(typeName);
+            System.out.println(hotelID);
+            System.out.println(roomNumber);
+
+            reservationID = Integer.toString((Integer.parseInt(reservationID) + 1));
+
             Connection conn = connect();
             String sql = "insert into Reservation (reservationID, checkInDate, checkOutDate, reservationDate, guestID, " +
                     "typeName, hotelID, roomNumber) " +
@@ -499,11 +514,11 @@ public class CustomerService {
         }
     }
 
-    public List<Room> checkRooms(String city, int capacity, Date arrive, Date depart) throws SQLException{
+    public List<Room> checkRooms(String city, int capacity, Date arrive, Date depart, Cookie cookies) throws SQLException{
         try {
             Connection conn = connect();
 
-            String sql = "select distinct h.address, r.typeName, rt.capacity, rt.monPrice, rt.sunPrice from reservation as res, room as r, hotel as h, roomtype as rt " +
+            String sql = "select distinct h.address, r.typeName, rt.capacity, rt.monPrice, rt.sunPrice, r.number, h.hotelID from reservation as res, room as r, hotel as h, roomtype as rt " +
                     "where r.typeName = rt.typeName and rt.capacity >= ? " +
                     "and r.hotelID = h.hotelID and rt.hotelID = h.hotelID and h.address = ? and " +
                     "not ((res.checkInDate <= ? and res.checkOutDate >= ?) or " +
@@ -542,6 +557,30 @@ public class CustomerService {
                 r.setCity(res.getString("address"));
                 r.setTypeName(res.getString("typename"));
                 r.setCapacity(res.getInt("capacity"));
+
+                PreparedStatement st = conn.prepareStatement("select count(*) as rowcount from reservation");
+                ResultSet info = st.executeQuery();
+
+                info.next();
+
+                r.setReservationID(info.getString("rowcount"));
+
+                info.close();
+
+                r.setRoomNumber(res.getInt("number"));
+                r.setHotelID(res.getString("hotelID"));
+
+                String em = cookies.getValue();
+
+                System.out.println(em);
+
+                PreparedStatement st2 = conn.prepareStatement("select userID from user where email = ?");
+                st2.setString(1, em);
+                ResultSet info2 = st2.executeQuery();
+
+                info2.next();
+
+                r.setGuestID(info2.getInt("userID"));
 
                 while(start.before(end)){
                     if(start.get(Calendar.DAY_OF_WEEK) == Calendar.SATURDAY || start.get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY){

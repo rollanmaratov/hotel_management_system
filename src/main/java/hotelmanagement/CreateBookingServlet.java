@@ -33,15 +33,12 @@ public class CreateBookingServlet extends HttpServlet {
     @Override
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("application/json");
-        BufferedReader reader = request.getReader();
-        Gson gson = new Gson();
 
-        Booking booking = gson.fromJson(reader, Booking.class);
         CustomerService service = new CustomerService();
 
-        service.createBooking(booking.getReservationID(), booking.getCheckInDate(),
-                booking.getCheckOutDate(), booking.getReservationDate(), booking.getGuestID(),
-                booking.getTypeName(), booking.getHotelID(), booking.getRoomNumber());
+        service.createBooking(request.getParameter("reservationID"), request.getParameter("checkInDate"),
+                request.getParameter("checkOutDate"), request.getParameter("reservationDate"), Integer.parseInt(request.getParameter("guestID")),
+                request.getParameter("typeName"), request.getParameter("hotelID"), Integer.parseInt(request.getParameter("roomNumber")));
         PrintWriter out = response.getWriter();
         out.flush();
     }

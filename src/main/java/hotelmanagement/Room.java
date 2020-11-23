@@ -7,7 +7,68 @@ public class Room {
     private String typeName;
     private int capacity;
     private float price;
-    private Date arrive;
+    private Date checkInDate;
+    private Date checkOutDate;
+    private String hotelID;
+    private String reservationID;
+    private String reservationDate;
+    private int guestID;
+    private int roomNumber;
+
+    public Date getCheckInDate() {
+        return checkInDate;
+    }
+
+    public void setCheckInDate(Date checkInDate) {
+        this.checkInDate = checkInDate;
+    }
+
+
+    public Date getCheckOutDate() {
+        return checkOutDate;
+    }
+
+    public void setCheckOutDate(Date checkOutDate) {
+        this.checkOutDate = checkOutDate;
+    }
+
+
+
+    public String getReservationID() {
+        return reservationID;
+    }
+
+    public void setReservationID(String reservationID) {
+        this.reservationID = reservationID;
+    }
+
+    public int getRoomNumber() {
+        return roomNumber;
+    }
+
+    public void setRoomNumber(int roomNumber) {
+        this.roomNumber = roomNumber;
+    }
+
+
+
+    public String getHotelID() {
+        return hotelID;
+    }
+
+    public void setHotelID(String hotelID) {
+        this.hotelID = hotelID;
+    }
+
+
+
+    public String getReservationDate() {
+        return reservationDate;
+    }
+
+    public void setReservationDate(String reservationDate) {
+        this.reservationDate = reservationDate;
+    }
 
     public String getTypeName() {
         return typeName;
@@ -15,25 +76,6 @@ public class Room {
 
     public void setTypeName(String typeName) {
         this.typeName = typeName;
-    }
-
-    public void setArrive(Date arrive) {
-        this.arrive = arrive;
-    }
-
-    public void setDepart(Date depart) {
-        this.depart = depart;
-    }
-
-    private Date depart;
-
-
-    public Date getArrive() {
-        return arrive;
-    }
-
-    public Date getDepart() {
-        return depart;
     }
 
 
@@ -59,5 +101,13 @@ public class Room {
 
     public void setPrice(float price) {
         this.price = price;
+    }
+
+    public int getGuestID() {
+        return guestID;
+    }
+
+    public void setGuestID(int guestID) {
+        this.guestID = guestID;
     }
 }
