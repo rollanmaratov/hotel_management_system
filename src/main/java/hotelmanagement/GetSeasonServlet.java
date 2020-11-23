@@ -24,8 +24,8 @@ public class GetSeasonServlet extends HttpServlet {
         CustomerService service = new CustomerService();
         Enumeration<String> email = request.getParameterNames();
         String hotelID =  service.getHotel(email.nextElement());
-        System.out.println("HotelID is: " + hotelID);
         ArrayList<Season> seasons = service.getSeason(hotelID);
+
         Gson gson = new Gson();
         String json = gson.toJson(seasons);
         PrintWriter out = response.getWriter();

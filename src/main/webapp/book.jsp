@@ -44,11 +44,6 @@
         }, {});
 
 
-        function makeBooking(element){
-
-        }
-
-
         function updateList() {
             $("#rooms").html("");
             rooms.free.forEach(function (e, p) {
@@ -64,7 +59,7 @@
 
                     console.log(rooms.free[p]);
 
-                    $.post('reservation', rooms.free[p]);
+                    $.post('create_booking', rooms.free[p]);
                     window.location.href = "index.jsp";
                 });
 

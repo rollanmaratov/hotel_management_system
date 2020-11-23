@@ -41,7 +41,7 @@
                     $.get('login', email, function(data) {
                         const name = data['firstname'] + ' ' + data['lastname'];
                         $("#link").html('<span class="profile_name"> Welcome, <a href="profilePage.jsp">' + name + '</a></span>' + ' <a href="logout.jsp"><b>Logout</b></a> </span>') ;
-                        $("#create_booking").attr("href", "draft.html")
+                        $("#create_booking").attr("href", "book.jsp")
                         $("#manage_booking").attr("href", "profilePage.jsp")
                     })
                 }

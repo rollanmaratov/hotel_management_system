@@ -351,18 +351,19 @@ public class CustomerService {
     public ArrayList<Season> getSeason(String hotelID) {
         try {
             Connection conn = connect();
-            String sql = "select hotelID, name, startDate, endDate, alteringPrice "+
-                    "from Season where hotelID = ?";
+            String sql = "select * from Season where hotelID = ?";
             PreparedStatement state = conn.prepareStatement(sql);
             state.setString(1, hotelID);
             ResultSet res = state.executeQuery();
             ArrayList<Season> seasonList = new ArrayList<Season>();
+
             while(res.next()) {
                 String hotID = res.getString("hotelID");
                 String name = res.getString("name");
                 String startDate = res.getString("startDate");
                 String endDate = res.getString("endDate");
-                String alteringPrice = res.getString("alteringPrice");
+                float alteringPric = res.getFloat("alteringPrice");
+                String alteringPrice = Float.toString(alteringPric);
                 Season seasonInfo = new Season(hotID, name, startDate, endDate, alteringPrice);
                 seasonList.add(seasonInfo);
             }
@@ -374,17 +375,20 @@ public class CustomerService {
         }
         return null;
     }
+
     public String getHotel( String email){
         try {
             Connection conn = connect();
-            String sql = "select hotelID from Employee "+
-                    "join User on employeeID = userID "+
-                    "where email = ? ";
+            String sql = "select hotelID from Employee" +
+                    " join User on employeeID = userID" +
+                    " where email = ? ";
             PreparedStatement state = conn.prepareStatement(sql);
             state.setString(1, email);
             ResultSet res = state.executeQuery();
-            res.next();
-            String resID = res.getString("hotelID");
+            String resID = "";
+            if (res.next()) {
+                resID = res.getString("hotelID");
+            }
             conn.close();
             return resID;
         } catch (Exception e) {
@@ -393,6 +397,7 @@ public class CustomerService {
         }
         return null;
     }
+
     public void editSeason(String hotelID, String name, String startDate, String endDate, String alteringPrice){
         try {
             Connection conn = connect();
