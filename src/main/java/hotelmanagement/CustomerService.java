@@ -399,6 +399,7 @@ public class CustomerService {
             state.setString(3, startDate);
             state.setString(4, endDate);
             state.setString(5, alteringPrice);
+            state.setString(6, name);
             state.executeUpdate();
             conn.close();
         } catch (Exception e) {
@@ -443,7 +444,7 @@ public class CustomerService {
             String typeName, String dayOfTheWeek, String hotelID) {
         try {
             Connection conn = connect();
-            String sql = "insert into Season (reservationID, checkInDate, checkOutDate, String reservationDate, int guestID, " +
+            String sql = "insert into Reservation (reservationID, checkInDate, checkOutDate, reservationDate, guestID, " +
                                 "typeName, dayOfTheWeek, hotelID) " +
                     "values(?, ?, ?, ?, ?, ?, ?, ?)";
             PreparedStatement state = conn.prepareStatement(sql);
@@ -455,6 +456,31 @@ public class CustomerService {
             state.setString(6, typeName);
             state.setString(7, dayOfTheWeek);
             state.setString(8, hotelID);
+            state.executeUpdate();
+            conn.close();
+        } catch (Exception e) {
+            System.err.println(e.getClass().getName() + ": " + e.getMessage());
+            System.exit(0);
+        }
+    }
+    public void editBooking(  String reservationID, String checkInDate,
+                                String checkOutDate, String reservationDate, int guestID,
+                                String typeName, String dayOfTheWeek, String hotelID) {
+        try {
+            Connection conn = connect();
+            String sql = "update Booking  set reservationID = ?, checkInDate = ?, checkOutDate = ?, reservationDate = ?, guestID = ?, " +
+                    "typeName = ?, dayOfTheWeek = ?, hotelID = ?) " +
+                    "where ReservationID = ?";
+            PreparedStatement state = conn.prepareStatement(sql);
+            state.setString(1, reservationID);
+            state.setString(2, checkInDate);
+            state.setString(3, checkOutDate);
+            state.setString(4, reservationDate);
+            state.setInt(5, guestID);
+            state.setString(6, typeName);
+            state.setString(7, dayOfTheWeek);
+            state.setString(8, hotelID);
+            state.setString(9, reservationID);
             state.executeUpdate();
             conn.close();
         } catch (Exception e) {
