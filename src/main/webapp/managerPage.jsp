@@ -148,28 +148,27 @@
             return form;
         }
 
-        function editItem(...season) {
-            console.log(...season);
-            // const n = season['name'];
-            // var id = n + "id";
-            // var li = document.getElementById(id)
-            // var form = createForm()
-            // $("#name").attr("value", season["name"])
-            // $("#startDate").attr("value", season["startDate"])
-            // $("#endDate").attr("value", season["endDate"])
-            // $("#alteringPrice").attr("value", season["alteringPrice"])
-            // var contents = li.textContent
-            // li.innerHTML = ""
-            // li.appendChild(form)
-            // $("#seasonSubmit").on('click', function() {
-            //     const data = formToJSON(form.elements)
-            //     const dataJson = JSON.stringify(data)
-            //     $.post('edit_season', dataJson, function() {
-            //         console.log("edit successful")
-            //     })
-            //     //
-            //     //li.textContent = contents
-            // })
+        function editItem(hotelID, name, startDate, endDate, alteringPrice) {
+            console.log(hotelID, name, startDate, endDate, alteringPrice);
+            var id = name + "id";
+            var li = document.getElementById(id)
+            var form = createForm()
+            $("#name").attr("value", name)
+            $("#startDate").attr("value", startDate)
+            $("#endDate").attr("value", endDate)
+            $("#alteringPrice").attr("value", alteringPrice)
+            var contents = li.textContent
+            li.innerHTML = ""
+            li.appendChild(form)
+            $("#seasonSubmit").on('click', function() {
+                const data = formToJSON(form.elements)
+                const dataJson = JSON.stringify(data)
+                $.post('edit_season', dataJson, function() {
+                    console.log("edit successful")
+                })
+                //
+                //li.textContent = contents
+            })
         }
 
         function deleteItem(name, hotelID) {
@@ -191,8 +190,8 @@
                 const endDate = season['endDate']
                 const alteringPrice = season['alteringPrice']
                 const ksks = season['hotelID'] + ", "
-                const editButton = "<button id=\"edit_button" + name + "\" type=\"button\" onclick='editItem("+ season +")'>Edit</button>"
-                const deleteButton = "<button id=\"delete_button" + name + "\" type=\"button\" onclick='deleteItem("+ name + ", " + hotelID +")'>Delete</button>"
+                const editButton = "<button id=\"edit_button" + name + "\" type=\"button\" onclick='editItem(\""+ hotelID +"\", \"" + name + "\", \"" + startDate +"\", \"" + endDate +"\", \"" + alteringPrice +"\")'>Edit</button>"
+                const deleteButton = "<button id=\"delete_button" + name + "\" type=\"button\" onclick='deleteItem(\""+ name + "\", \"" + hotelID +"\")'>Delete</button>"
                 const appendString = "<li class=\"season_entry\" id=\"" + name + "id\">Season Name: " + name + " Start Date: " + startDate + " End Date: " + endDate + " Markup: " + alteringPrice + editButton + deleteButton + "</li>"
                 $("#seasons_list").append(appendString)
                 console.log('testing')
@@ -218,6 +217,7 @@
             });
 
             getSeasons();
+
         });
 
     </script>
@@ -246,35 +246,38 @@
     <span class="title"> Manage Employees </span>
 </div>
 
-<div class="searchEmployee">
-    <form id="search_emp">
-        <label for="emp">Search Employee by ID</label>
-        <input name="emp" id="emp" type="text">
-        <button type="button" id="search">Search</button>
-    </form>
-</div>
-<span id="no_employee"></span>
-<div id="foundEmp" style="display: none">
-    <span id="employee"></span> <br>
-    <form id="empForm">
-        <span id="wh">Working Hours: </span> <br>
-        <div class="days">
-            <label for="monHours">Monday:</label><input type="text" name="monHours" id="monHours">
-            <label for="tueHours">Tuesday:</label><input type="text" name="tueHours" id="tueHours">
-            <label for="wedHours">Wednesday:</label><input type="text" name="wedHours" id="wedHours">
-            <label for="thuHours">Thursday:</label><input type="text" name="thuHours" id="thuHours">
-            <label for="friHours">Friday:</label><input type="text" name="friHours" id="friHours">
-            <label for="satHours">Saturday:</label><input type="text" name="satHours" id="satHours">
-            <label for="sunHours">Sunday:</label><input type="text" name="sunHours" id="sunHours">
-            <input type="text" id="userID" name="userID" style="display: none">
-        </div>
-        <br>
-        <div class="hrsslry">
-            <label for="hourSalary">Salary: </label><input type="text" name="hourSalary" id="hourSalary">
-        </div>
-        <br><button type="button" id="update">Submit changes</button>
-    </form>
-    <div id="response"></div>
+<div class="managerBlock">
+
+    <div class="searchEmployee">
+        <form id="search_emp">
+            <label for="emp">Search Employee by ID: </label>
+            <input name="emp" id="emp" type="text">
+            <button type="button" id="search">Search</button>
+        </form>
+    </div>
+    <span id="no_employee"></span>
+    <div id="foundEmp" style="display: none">
+        <span id="employee"></span> <br>
+        <form id="empForm">
+            <span id="wh">Working Hours: </span> <br>
+            <div class="days">
+                <label for="monHours">Monday:</label><input type="text" name="monHours" id="monHours">
+                <label for="tueHours">Tuesday:</label><input type="text" name="tueHours" id="tueHours">
+                <label for="wedHours">Wednesday:</label><input type="text" name="wedHours" id="wedHours">
+                <label for="thuHours">Thursday:</label><input type="text" name="thuHours" id="thuHours">
+                <label for="friHours">Friday:</label><input type="text" name="friHours" id="friHours">
+                <label for="satHours">Saturday:</label><input type="text" name="satHours" id="satHours">
+                <label for="sunHours">Sunday:</label><input type="text" name="sunHours" id="sunHours">
+                <input type="text" id="userID" name="userID" style="display: none">
+            </div>
+            <br>
+            <div class="hrsslry">
+                <label for="hourSalary">Salary: </label><input type="text" name="hourSalary" id="hourSalary">
+            </div>
+            <br><button type="button" id="update">Submit changes</button>
+        </form>
+        <div id="response"></div>
+    </div>
 </div>
 
 <br>
@@ -282,8 +285,8 @@
     <span class="title"> Manage Seasons </span>
 </div>
 
-<div id="seasons">
-    <ol id="seasons_list"></ol>
+<div class="managerBlock">
+    <ul id="seasons_list"></ul>
 </div>
 
 </body>

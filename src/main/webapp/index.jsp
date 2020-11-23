@@ -92,7 +92,7 @@
                 <span>Hotel <br> Dreamers</span>
                 </a>
             </div>
-            
+
             <div class="services">
                 <a href="index.jsp"> Homepage </a>
                 <a id="create_booking" href="">Create a Booking</a>

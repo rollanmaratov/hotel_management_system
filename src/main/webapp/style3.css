@@ -7,7 +7,8 @@ body {
     font-family: 'Roboto Slab', serif;
     min-width: 320px;
     overflow-x: hidden;
-    background-color: #f8efd4;
+    background: url("img/france.jpg");
+    background-size:cover;
 }
 
 .links {
@@ -41,7 +42,7 @@ body {
 }
 
 .services a {
-    color: #132743;
+    color: #FFFAFA;
     text-decoration: none;
     text-transform: uppercase;
     margin-left: 10px;
@@ -93,7 +94,8 @@ body {
 .text_wrapper {
     margin: 10px 50px 10px 50px;
     display: flex;
-    background-color: #fff;
+    background-color: #E6E6FA
+;
     box-shadow: 3px 2px 5px rgba(0, 0, 0, 0.5);
 }
 
@@ -136,53 +138,16 @@ Profile page style
 .title_section {
     text-align: center;
 }
+
 /*
-manager
- */
+Booking/Search page style
+*/
 
-
-.days input[type=text]{
-    height: 25px;
-    width: 25px;
+.search {
+    text-align: center;
 }
+/*.lead {*/
+/*    font-size: 1px;*/
+/*    font-weight: 10;*/
 
-.hrsslry input[type=text] {
-    height: 25px;
-    width: 25px;
-}
-
-.managerBlock {
-    margin-left: 10px;
-    margin-top: 5px;
-
-    padding-left: 10px;
-    padding-top: 10px;
-    padding-bottom: 10px;
-    border-style: solid;
-    border-color: #132743;
-    width: 90%;
-}
-
-#emp {
-    height: 25px;
-    width: 25px;
-}
-
-button {
-    margin-left: 8px;
-    width: 100px;
-    height: 25px;
-}
-
-.seasons {
-    margin-left: 10px;
-    margin-top: 5px;
-}
-
-#wh {
-    font-weight: bold;
-}
-
-ul {
-    list-style-type: none;
-}
+/*}*/

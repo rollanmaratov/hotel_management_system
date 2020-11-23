@@ -1,15 +1,23 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Profile Page</title>
-        <link rel="stylesheet" href="style.css">
-        <script src="http://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile Page</title>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 
-        <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@100;300;400;600;700;900&display=swap" rel="stylesheet">
-        <script type="text/javascript">
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="style.css">
+    <script src="http://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
+
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@100;300;400;600;700;900&display=swap" rel="stylesheet">
+    <script type="text/javascript">
         //here goes my script
 
         function getCookie(cname) {
@@ -119,62 +127,72 @@
         });
 
     </script>
-    </head>
-    <body>
-        <div class="links">
-            <a href="logout.jsp"><b>Logout</b></a>
-        </div>
-        <div class="heading">
-            
-            <div class="hotel_logo">
-                <a href="index.jsp">
-                <span>Hotel <br> Dreamers</span>
-                </a>
+</head>
+<body>
+<div class="links">
+    <a href="logout.jsp"><b>Logout</b></a>
+</div>
+<div class="heading">
+
+    <div class="hotel_logo">
+        <a href="index.jsp">
+            <span>Hotel <br> Dreamers</span>
+        </a>
+    </div>
+
+    <div class="services">
+        <a href="index.jsp"> Homepage </a>
+        <a href="draft.html">Create a Booking</a>
+        <a>Manage my Booking</a>
+        <a href="draft.html">Information</a>
+        <a href="draft.html">Contacts</a>
+    </div>
+</div>
+
+<div class="title_section">
+    <span class="title"> My bookings </span>
+</div>
+
+<div id="bookings">
+    <div id="active_bookings">
+        <span>Current Bookings:</span> <br>
+        <ul id="activeBookingList"></ul>
+    </div>
+
+    <div id="past_bookings">
+        <span>Past Bookings:</span> <br>
+        <ul id="pastBookingList"></ul>
+    </div>
+</div>
+<div id="no_bookings"></div>
+<br />
+<br />
+<div class="container">
+
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            <div class="title_section">
+                <span class="title"> User Profile </span>
             </div>
-            
-            <div class="services">
-                <a href="index.jsp"> Homepage </a>
-                <a href="draft.html">Create a Booking</a>
-                <a>Manage my Booking</a>
-                <a href="draft.html">Information</a>
-                <a href="draft.html">Contacts</a>
+        </div>
+
+        <div class="panel-body">
+            <div class="info_section">
+                <div class="form-group">
+                    <span>First Name: </span> <span id="firstName" ></span> <br>
+                </div>
+                <span>Last Name: </span> <span id="lastName"></span><br>
+                <span>Email: </span> <span id="email"></span> <br>
+                <span>Address: </span> <span id="addressLine1"></span> <span id="addressLine2"></span> <br>
+                <span>Document: </span> <span id="idType"></span> <span id="idNumber"></span> <br>
+                <span>Mobile Phone Number: </span> <span id="mobilePhoneNumber"></span> <br>
+                <span>Home Phone Number: </span> <span id="homePhoneNumber"></span> <br>
+                <span>Sex: </span> <span id="sex"></span> <br>
+                <span>Date of Birth: </span> <span id="dateOfBirth"></span> <br>
             </div>
         </div>
+    </div>
+</div>
 
-        <div class="title_section">
-            <span class="title"> My bookings </span>
-        </div>
-
-        <div id="bookings">
-            <div id="active_bookings">
-                <span>Current Bookings:</span> <br>
-                <ul id="activeBookingList"></ul>
-            </div>
-
-            <div id="past_bookings">
-                <span>Past Bookings:</span> <br>
-                <ul id="pastBookingList"></ul>
-            </div>
-        </div>
-        <div id="no_bookings"></div>
-        <br />
-        <br />
-
-        <div class="title_section">
-            <span class="title"> User Profile </span>
-        </div>
-
-        <div class="info_section">
-            <span>First Name: </span> <span id="firstName"></span> <br>
-            <span>Last Name: </span> <span id="lastName"></span><br>
-            <span>Email: </span> <span id="email"></span> <br>
-            <span>Address: </span> <span id="addressLine1"></span> <span id="addressLine2"></span> <br>
-            <span>Document: </span> <span id="idType"></span> <span id="idNumber"></span> <br>
-            <span>Mobile Phone Number: </span> <span id="mobilePhoneNumber"></span> <br>
-            <span>Home Phone Number: </span> <span id="homePhoneNumber"></span> <br>
-            <span>Sex: </span> <span id="sex"></span> <br>
-            <span>Date of Birth: </span> <span id="dateOfBirth"></span> <br>
-        </div>
-
-    </body>
-</html> 
+</body>
+</html>
