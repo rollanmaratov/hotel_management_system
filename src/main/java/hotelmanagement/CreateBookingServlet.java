@@ -29,7 +29,6 @@ public class CreateBookingServlet extends HttpServlet {
         PrintWriter out = response.getWriter();
         out.flush();
     }
-
     @Override
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("application/json");
