@@ -19,7 +19,15 @@ public class EditSeasonServlet extends HttpServlet {
 
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        doPost(request, response);
+        response.setContentType("application/json");
+        BufferedReader reader = request.getReader();
+        Gson gson = new Gson();
+        Season season = gson.fromJson(reader, Season.class);
+        CustomerService service = new CustomerService();
+        service.createSeason(season.getHotelID(), season.getName(),
+                season.getStartDate(), season.getEndDate(), season.getAlteringPrice());
+        PrintWriter out = response.getWriter();
+        out.flush();
     }
     @Override
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

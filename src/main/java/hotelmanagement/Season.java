@@ -19,38 +19,18 @@ public class Season {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
     public String getStartDate() {
         return startDate;
-    }
-
-    public void setStartDate(String startDate) {
-        this.startDate = startDate;
     }
 
     public String getEndDate() {
         return endDate;
     }
 
-    public void setEndDate(String endDate) {
-        this.endDate = endDate;
-    }
-
     public String getAlteringPrice() { return alteringPrice; }
-
-    public void setAlteringPrice(String alteringPrice) {
-        this.alteringPrice = alteringPrice;
-    }
 
     public String getHotelID() {
         return hotelID;
-    }
-
-    public void setHotelID(String hotelID) {
-        this.hotelID = hotelID;
     }
 }
 
