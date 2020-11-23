@@ -468,7 +468,7 @@ public class CustomerService {
                                 String typeName, String dayOfTheWeek, String hotelID) {
         try {
             Connection conn = connect();
-            String sql = "update Booking  set reservationID = ?, checkInDate = ?, checkOutDate = ?, reservationDate = ?, guestID = ?, " +
+            String sql = "update Reservation  set reservationID = ?, checkInDate = ?, checkOutDate = ?, reservationDate = ?, guestID = ?, " +
                     "typeName = ?, dayOfTheWeek = ?, hotelID = ?) " +
                     "where ReservationID = ?";
             PreparedStatement state = conn.prepareStatement(sql);
