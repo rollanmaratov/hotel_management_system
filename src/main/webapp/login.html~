@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Login Page</title>
+        <link rel="stylesheet" href="style.css">
+        <script src="scripts/jquery.min.js"></script>
+        <script src="scripts/lodash.min.js"></script>
+        <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@100;300;400;600;700;900&display=swap" rel="stylesheet">
+        <script type="text/javascript">
+        //here goes my script
+        function sendLoginInfo() {
+            var email = $("#email").val();
+            var password = $("#password").val();
+        }
+        $.ajax({
+        type: 'POST',
+        url: '/user/login',
+        dataType: json,
+        success: function(reg){
+            alert(reg);
+        }
+        });
+
+        </script>
+    </head>
+    <body>
+        <div class="links">
+            <a href="login.html">Log In or Register</a>
+        </div>
+        <div class="heading">
+            <a href="index.html">
+                <div class="hotel_logo">
+                    <span>Hotel <br> Dreamers</span>
+                </div>
+                </a>
+        </div>
+
+        <div class="login">
+            <span class="title">Login</span>
+            <form method="POST" action="/user/login" class="loginform">
+                <input type="text" placeholder="Email" name="email" id="email"> <br>
+                <input type="password" placeholder="Password" name="password" id="password"> <br>
+                <input type="submit" id="login_button" name="login_button" value="Login">
+                <p>New user? Register <a href="register.html">here</a></p>
+            </form>
+        </div>
+
+   
+    </body>
+</html> 

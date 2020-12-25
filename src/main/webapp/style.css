@@ -1,0 +1,188 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+body {
+    font-family: 'Roboto Slab', serif;
+    min-width: 320px;
+    overflow-x: hidden;
+    background-color: #f8efd4;
+}
+
+.links {
+    background-color: #132743;
+    height: 25px;
+    font-size: 15px;
+    text-align: right;
+}
+
+.links span, .links a{
+    color: white;
+    margin-right: 8px;
+}
+
+.links a {
+    text-decoration: none;
+}
+
+.links a:hover {
+    text-decoration: underline;
+}
+
+.heading {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.services {
+    margin-top: 30px;
+}
+
+.services a {
+    color: #132743;
+    text-decoration: none;
+    text-transform: uppercase;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+.hotel_logo a {
+    color: white;
+    text-decoration: none;
+}
+
+.hotel_logo {
+    width: 100px;
+    color: white;
+    background-color: #132743;
+    margin-left: 25px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.welcome_image {
+    display: grid;
+    height: 100%;
+}
+
+.center_fit {
+    max-width: 100%;
+    max-height: 100vh;
+    margin: auto;
+}
+
+.about_hotel {
+    margin-top: 10px;
+    text-align: center;
+}
+
+.title {
+    text-align: center;
+    margin-top: 100px;
+    color: #303960;
+    text-transform: uppercase;
+    font-size: 20px;
+    font-weight: 900;
+    text-align: center;
+}
+
+.text_wrapper {
+    margin: 10px 50px 10px 50px;
+    display: flex;
+    background-color: #fff;
+    box-shadow: 3px 2px 5px rgba(0, 0, 0, 0.5);
+}
+
+.text_wrapper #oops {
+    text-align: center;
+}
+
+/*
+Login style
+*/
+
+.login {
+    text-align: center;
+}
+
+.loginForm {
+    text-align: center;
+}
+
+.required label:after {
+    content: "*";
+    color: darkred;
+}
+/*
+Register Style
+*/
+
+.registration {
+    text-align: center;
+}
+
+/*
+Profile page style
+*/
+
+.info_section {
+    text-align: center;
+}
+
+.title_section {
+    text-align: center;
+}
+/*
+manager
+ */
+
+
+.days input[type=text]{
+    height: 25px;
+    width: 25px;
+}
+
+.hrsslry input[type=text] {
+    height: 25px;
+    width: 25px;
+}
+
+.managerBlock {
+    margin-left: 10px;
+    margin-top: 5px;
+
+    padding-left: 10px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    border-style: solid;
+    border-color: #132743;
+    width: 90%;
+}
+
+#emp {
+    height: 25px;
+    width: 25px;
+}
+
+button {
+    margin-left: 8px;
+    width: 100px;
+    height: 25px;
+}
+
+.seasons {
+    margin-left: 10px;
+    margin-top: 5px;
+}
+
+#wh {
+    font-weight: bold;
+}
+
+ul {
+    list-style-type: none;
+}
